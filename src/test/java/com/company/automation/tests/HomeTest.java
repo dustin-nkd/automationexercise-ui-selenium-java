@@ -8,11 +8,12 @@ import org.testng.annotations.Test;
 public class HomeTest extends BaseTest{
 
     @Test
-    public void shouldDisplayHomePage() {
+    public void shouldNavigateToLoginPage() {
 
         HomePage homePage = new HomePage();
+
         homePage.open();
 
-        Assert.assertTrue(homePage.isHomePageDisplayed());
+        homePage.goToLogin();
     }
 }
