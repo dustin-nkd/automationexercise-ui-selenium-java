@@ -46,6 +46,13 @@
             <version>${allure.testng.version}</version>
         </dependency>
 
+        <!-- WebDriver Manager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>6.1.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
