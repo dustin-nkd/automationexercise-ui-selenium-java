@@ -3,23 +3,22 @@ package com.company.automation.driver;
 import org.openqa.selenium.WebDriver;
 
 public final class DriverManager {
-    private static final ThreadLocal<WebDriver> driverThread = new ThreadLocal<>();
+  private static final ThreadLocal<WebDriver> driverThread = new ThreadLocal<>();
 
-    private DriverManager() {
-    }
+  private DriverManager() {}
 
-    public static void setDriver(WebDriver driver) {
-        driverThread.set(driver);
-    }
+  public static void setDriver(WebDriver driver) {
+    driverThread.set(driver);
+  }
 
-    public static WebDriver getDriver() {
-        return driverThread.get();
-    }
+  public static WebDriver getDriver() {
+    return driverThread.get();
+  }
 
-    public static void quitDriver() {
-        if (driverThread.get() != null) {
-            driverThread.get().quit();
-            driverThread.remove();
-        }
+  public static void quitDriver() {
+    if (driverThread.get() != null) {
+      driverThread.get().quit();
+      driverThread.remove();
     }
+  }
 }

@@ -9,13 +9,11 @@ import java.io.ByteArrayInputStream;
 
 public class ScreenshotUtils {
 
-    public static void attachScreenshot() {
+  public static void attachScreenshot() {
 
-        byte[] screenshot = ((TakesScreenshot) DriverManager.getDriver())
-                .getScreenshotAs(OutputType.BYTES);
+    byte[] screenshot =
+        ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
 
-        Allure.addAttachment("Screenshot",
-                new ByteArrayInputStream(screenshot)
-        );
-    }
+    Allure.addAttachment("Screenshot", new ByteArrayInputStream(screenshot));
+  }
 }

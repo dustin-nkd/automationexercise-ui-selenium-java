@@ -5,30 +5,22 @@ import java.util.Properties;
 
 public final class ConfigReader {
 
-    private static final Properties properties = new Properties();
+  private static final Properties properties = new Properties();
 
-    static {
+  static {
+    String env = System.getProperty("env", "dev");
+    String fileName = "config-" + env + ".properties";
 
-        String env = System.getProperty("env", "dev");
-
-        String fileName = "config-" + env + ".properties";
-
-        try (InputStream input = ConfigReader.class
-                .getClassLoader()
-                .getResourceAsStream(fileName)) {
-
-            properties.load(input);
-
-        } catch (Exception e) {
-
-            throw new RuntimeException("Failed to load config file: " + fileName, e);
-        }
+    try (InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream(fileName)) {
+      properties.load(input);
+    } catch (Exception e) {
+      throw new RuntimeException("Failed to load config file: " + fileName, e);
     }
+  }
 
-    private ConfigReader() {
-    }
+  private ConfigReader() {}
 
-    public static String get(String key) {
-        return properties.getProperty(key);
-    }
+  public static String get(String key) {
+    return properties.getProperty(key);
+  }
 }

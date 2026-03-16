@@ -10,19 +10,16 @@ import org.testng.annotations.BeforeMethod;
 
 public abstract class BaseTest {
 
-    @BeforeMethod
-    public void setUp() {
+  @BeforeMethod
+  public void setUp() {
+    String browser = ConfigReader.get("browser");
+    WebDriver driver = DriverFactory.createDriver(BrowserType.valueOf(browser.toUpperCase()));
 
-        String browser = ConfigReader.get("browser");
+    DriverManager.setDriver(driver);
+  }
 
-        WebDriver driver = DriverFactory.createDriver(
-                BrowserType.valueOf(browser.toUpperCase()));
-
-        DriverManager.setDriver(driver);
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void tearDown() {
-        DriverManager.quitDriver();
-    }
+  @AfterMethod(alwaysRun = true)
+  public void tearDown() {
+    DriverManager.quitDriver();
+  }
 }
