@@ -9,7 +9,6 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.time.Duration;
 
-
 public class DriverManager {
 
     private static final ThreadLocal<WebDriver> driverThread = new ThreadLocal<>();
