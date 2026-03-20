@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Automation Exercise Test Suite" verbose="1" thread-count="1">
+
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+
+    <test name="Authentication Tests">
+        <groups>
+            <run>
+                <include name="authentication"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.automationexercise.tests.AuthenticationTest"/>
+        </classes>
+    </test>
+
+    <test name="Contact and Subscription Tests">
+        <groups>
+            <run>
+                <include name="contact"/>
+                <include name="subscription"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.automationexercise.tests.ContactTest"/>
+        </classes>
+    </test>
+
+    <test name="Product Tests">
+        <groups>
+            <run>
+                <include name="product"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.automationexercise.tests.ProductTest"/>
+        </classes>
+    </test>
+
+    <test name="Cart Tests">
+        <groups>
+            <run>
+                <include name="cart"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.automationexercise.tests.CartTest"/>
+        </classes>
+    </test>
+
+    <test name="Checkout Tests">
+        <groups>
+            <run>
+                <include name="checkout"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.automationexercise.tests.CheckoutTest"/>
+        </classes>
+    </test>
+
+    <test name="UI Navigation Tests">
+        <groups>
+            <run>
+                <include name="ui"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.automationexercise.tests.UITest"/>
+        </classes>
+    </test>
+
+</suite>
