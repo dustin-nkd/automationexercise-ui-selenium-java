@@ -59,7 +59,7 @@
             <version>${slf4j.version}</version>
         </dependency>
 
-        <!-- ✅ Java Faker -->
+        <!-- ✅ Data Faker -->
         <dependency>
             <groupId>net.datafaker</groupId>
             <artifactId>datafaker</artifactId>
