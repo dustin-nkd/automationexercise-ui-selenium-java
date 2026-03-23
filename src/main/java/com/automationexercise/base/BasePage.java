@@ -4,7 +4,6 @@ import com.automationexercise.utils.WaitUtils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 public abstract class BasePage {
@@ -13,10 +12,23 @@ public abstract class BasePage {
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, this);
     }
 
-    @Step("Navigate to URL: {url}")
+    // ===== FIND ELEMENT =====
+    protected WebElement find(By locator) {
+        return driver.findElement(locator);
+    }
+
+    protected WebElement findClickable(By locator) {
+        return WaitUtils.waitForClickable(driver, locator);
+    }
+
+    protected WebElement findVisible(By locator) {
+        return WaitUtils.waitForVisible(driver, locator);
+    }
+
+    // ===== NAVIGATION =====
+    @Step("Navigate to: {path}")
     protected void navigateTo(String baseUrl, String path) {
         driver.get(baseUrl + path);
     }
@@ -30,53 +42,52 @@ public abstract class BasePage {
     }
 
     // ===== ELEMENT INTERACTIONS =====
-    @Step("Click Element")
-    protected void click(WebElement element) {
-        WaitUtils.waitForClickable(driver, element).click();
+    @Step("Click element: {locator}")
+    protected void click(By locator) {
+        findClickable(locator).click();
     }
 
-    @Step("Type '{text}' into field")
-    protected void type(WebElement element, String text) {
-        WaitUtils.waitForClickable(driver, element).clear();
+    @Step("Type '{text}' into: {locator}")
+    protected void type(By locator, String text) {
+        WebElement element = findVisible(locator);
+        element.clear();
         element.sendKeys(text);
     }
 
-    @Step("Get text of element")
-    protected String getText(WebElement element) {
-        return WaitUtils.waitForVisible(driver, element).getText();
+    @Step("Get text of: {locator}")
+    protected String getText(By locator) {
+        return findVisible(locator).getText();
     }
 
-    protected boolean isDisplayed(WebElement element) {
+    protected boolean isDisplayed(By locator) {
         try {
-            return element.isDisplayed();
+            return find(locator).isDisplayed();
         } catch (NoSuchElementException | StaleElementReferenceException e) {
             return false;
         }
     }
 
-    protected void selectByVisibleText(WebElement element, String text) {
-        new Select(element).selectByVisibleText(text);
+    protected void selectByVisibleText(By locator, String text) {
+        new Select(find(locator)).selectByVisibleText(text);
     }
 
     // ===== SCROLL =====
-    @Step("Scroll to element")
-    protected void scrollToElement(WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+    @Step("Scroll to element: {locator}")
+    protected void scrollToElement(By locator) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", find(locator));
     }
 
-    @Step("Scroll to bottom of page")
     protected void scrollToBottom() {
         ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, document.body.scrollHeight);");
     }
 
-    @Step("Scroll to top of page")
     protected void scrollToTop() {
         ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
     }
 
     // ===== JAVASCRIPT =====
-    public void jsClick(WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+    public void jsClick(By locator) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", find(locator));
     }
 
     protected boolean isElementPresent(By locator) {
@@ -84,8 +95,8 @@ public abstract class BasePage {
     }
 
     // ===== ACTIONS =====
-    protected void hoverElement(WebElement element) {
-        new Actions(driver).moveToElement(element).perform();
+    protected void hoverElement(By locator) {
+        new Actions(driver).moveToElement(find(locator)).perform();
     }
 
     // ===== ALERT =====
