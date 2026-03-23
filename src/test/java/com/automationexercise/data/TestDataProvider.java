@@ -1,7 +1,7 @@
 package com.automationexercise.data;
 
 import com.automationexercise.utils.ConfigReader;
-import com.github.javafaker.Faker;
+import net.datafaker.Faker;
 
 import java.util.Locale;
 

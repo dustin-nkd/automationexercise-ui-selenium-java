@@ -29,7 +29,6 @@ public class DriverManager {
 
         switch (browser) {
             case "firefox":
-                WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 if (headless) firefoxOptions.addArguments("--headless");
                 driver = new FirefoxDriver(firefoxOptions);
@@ -37,7 +36,6 @@ public class DriverManager {
 
             case "chrome":
             default:
-                WebDriverManager.chromedriver().setup();
                 ChromeOptions chromeOptions= builChromeOptions(headless);
                 driver = new ChromeDriver(chromeOptions);
                 break;
