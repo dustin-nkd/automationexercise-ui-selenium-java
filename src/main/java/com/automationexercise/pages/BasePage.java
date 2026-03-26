@@ -23,7 +23,7 @@ import java.time.Duration;
  * <p>
  * All Page classes MUST extend this class.
  */
-public class BasePage {
+public abstract class BasePage {
 
     private static final Logger log = LoggerFactory.getLogger(BasePage.class);
 
