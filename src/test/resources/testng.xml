@@ -10,8 +10,7 @@
 
     <test name="Smoke Tests">
         <classes>
-            <!-- Add test classes here as they are created -->
-            <!-- <class name="com.automationexercise.tests.HomePageTest"/> -->
+            <class name="com.automationexercise.tests.RegisterUserTest"/>
         </classes>
     </test>
 

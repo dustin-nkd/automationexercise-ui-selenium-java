@@ -1,5 +1,6 @@
 package com.automationexercise.base;
 
+import com.automationexercise.App;
 import com.automationexercise.driver.Drivermanager;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
@@ -19,12 +20,15 @@ import org.testng.annotations.BeforeMethod;
  * <p>
  * Lifecycle per test method:
  *  &#064;BeforeMethod  -> initDriver()
- *  &#064;Test          -> test logic (via Page Object)
+ *  &#064;Test          -> test logic via app.open() -> Page Objects
  *  &#064;AfterMethod   -> screenshot on fail -> quitDriver()
  */
 public abstract class BaseTest {
 
     private static final Logger log = LoggerFactory.getLogger(BaseTest.class);
+
+    // Application entry point - available to all test classes via inheritance
+    protected App app;
 
     /**
      * Initializes WebDriver before each test method.
@@ -34,6 +38,7 @@ public abstract class BaseTest {
     public void setup() {
         log.info("====== Starting test: {} =====", Thread.currentThread().getName());
         Drivermanager.initDriver();
+        app = new App();
     }
 
     /**

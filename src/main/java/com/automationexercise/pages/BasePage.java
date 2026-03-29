@@ -95,7 +95,7 @@ public abstract class BasePage {
      * @param locator the By locator
      * @return the present WebElement
      */
-    protected WebElement waitForPresent(By locator) {
+    protected WebElement waitForPresence(By locator) {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
@@ -208,10 +208,24 @@ public abstract class BasePage {
      */
     protected boolean isPresent(By locator) {
         try {
-            waitForPresent(locator);
+            waitForPresence(locator);
             return true;
         } catch (TimeoutException | NoSuchElementException e) {
             return false;
+        }
+    }
+
+    /**
+     * Checks whether a checkbox is currently checked.
+     *
+     * @param locator the By locator of the checkbox
+     * @return true if checkbox is checked
+     */
+    protected boolean isCheckboxChecked(By locator) {
+        try {
+            return waitForPresence(locator).isSelected();
+        } catch (TimeoutException | NoSuchElementException e) {
+            return true;
         }
     }
 
@@ -232,7 +246,7 @@ public abstract class BasePage {
      * @param locator the By locator of the element to scroll to
      */
     protected void scrollToElement(By locator) {
-        WebElement element = waitForPresent(locator);
+        WebElement element = waitForPresence(locator);
         ((JavascriptExecutor) driver).executeScript(
                 "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});",
                 element
@@ -255,7 +269,7 @@ public abstract class BasePage {
      * @param locator the By locator of the element
      */
     protected void jsClick(By locator) {
-        WebElement element = waitForPresent(locator);
+        WebElement element = waitForPresence(locator);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
         log.debug("JS click on element: {}", locator);
     }
