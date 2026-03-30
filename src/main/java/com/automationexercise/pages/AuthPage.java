@@ -1,6 +1,5 @@
 package com.automationexercise.pages;
 
-import com.automationexercise.pages.components.HeaderComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
@@ -8,13 +7,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Page Object for the Login / Signup page (/login).
- * Contains both Login and Signup sections - they share the same URL.
+ * Does NOT hold HeaderComponent as a field - avoids circular dependency.
  */
 public class AuthPage extends BasePage {
 
     private static final Logger log =  LoggerFactory.getLogger(AuthPage.class);
-
-    public final HeaderComponent header = new HeaderComponent();
 
     // ==================== LOCATORS ====================
 
@@ -34,9 +31,9 @@ public class AuthPage extends BasePage {
     // ==================== LOGIN ACTIONS ====================
 
     /**
-     * Verifies 'Login to your account' heading is visible.
+     * Returns the text of 'Login to your account' heading.
      *
-     * @return heading text for assertion
+     * @return heading text
      */
     @Step("Get 'Login to your account' heading text")
     public String getLoginHeadingText() {
@@ -44,28 +41,26 @@ public class AuthPage extends BasePage {
     }
 
     /**
-     * Verifies 'Login to your account' heading is visible on the page.
+     * Verifies user is on login page by checking URL.
      *
-     * @return true if heading is visible
+     * @return true if current URL contains '/login'
      */
-    @Step("Verify 'Login to your account' is visible")
-    public boolean isLoginHeadingVisible() {
-        boolean visible = isDisplayed(LOGIN_HEADING);
-        log.info("'Login to your account' visible: {}", visible);
-        return visible;
+    @Step("Verify user is on login page")
+    public boolean isOnLoginPage() {
+        waitForUrlContains("/login");
+        return getCurrentUrl().contains("login");
     }
 
     /**
-     * Enters email and password then clicks Login.
-     * Steps 6 + 7 always performed together - combined per YAGNI.
+     * Enters credentials ad clicks Login - expects success.
      *
      * @param email    registered email address
      * @param password account password
-     * @return HomePage instance after successfull login
+     * @return HomePage instance after successful login
      */
     @Step("Login with email: {email}")
     public HomePage login(String email, String password) {
-        log.info("Loggin in with email: '{}", email);
+        log.info("Logging in with email: '{}", email);
         type(LOGIN_EMAIL_INPUT, email);
         type(LOGIN_PASSWORD_INPUT, password);
         click(LOGIN_BUTTON);
@@ -73,23 +68,8 @@ public class AuthPage extends BasePage {
     }
 
     /**
-     * Returns the error message text shown after failed login attempt.
-     * Used for assertion in TC03.
-     *
-     * @return error message text
-     */
-    @Step("Get login error message text")
-    public String getLoginErrorMessage() {
-        String message = getText(LOGIN_ERROR_MESSAGE);
-        log.info("Login error message: {}", message);
-        return message;
-    }
-
-    /**
-     * Enters invalid credentials and clicks Login - stays on AuthPage.
-     * Used for negative test cases where login is expected to fail.
-     *
-     * Separate from login() which returns HomePage - different post-action state.
+     * Enters invalid credentials and clicks Login - expects failure.
+     * Stays on AuthPage after failed login attempt.
      *
      * @param email    invalid email address
      * @param password invalid password
@@ -102,25 +82,24 @@ public class AuthPage extends BasePage {
         click(LOGIN_BUTTON);
     }
 
+    /**
+     * Returns the error message text shown after failed login attempt.
+     *
+     * @return error message text
+     */
+    @Step("Get login error message text")
+    public String getLoginErrorMessage() {
+        String message = getText(LOGIN_ERROR_MESSAGE);
+        log.info("Login error message: {}", message);
+        return message;
+    }
+
     // ==================== SIGNUP ACTIONS ====================
 
     /**
-     * Verifies 'New User Signup' heading is visible on the page.
+     * Verifies 'New User Signup!' heading is visible.
      *
-     * @return true if heading is visible
-     */
-    @Step("Verify 'New User Signup!' is visible")
-    public boolean isNewUserSignupVisible() {
-        boolean visible = isDisplayed(NEW_USER_SIGNUP_HEADING);
-        log.info("'New User Signup!' visible: {}", visible);
-        return visible;
-    }
-
-    /**
-     * Returns the text of the 'New User Signup!' heading.
-     * Used for exact text assertion in test.
-     *
-     * @return heading text
+     * @return heading text for assertion
      */
     @Step("Get 'New User Signup!' heading text")
     public String getNewUserSignupHeadingText() {
@@ -128,12 +107,11 @@ public class AuthPage extends BasePage {
     }
 
     /**
-     * Enters the name and email in the Signup form then clicks Signup.
-     * Combines steps 6 + 7 - always performed together - combined per YAGNI.
+     * Enters the name and email the click Signup.
      *
      * @param name  the new user's name
      * @param email the new user's email address
-     * @return RegisterPage instance after form submission
+     * @return RegisterPage instance
      */
     @Step("Sign up with name: {name} and email: {email}")
     public RegisterPage signUp(String name, String email) {

@@ -1,6 +1,5 @@
 package com.automationexercise.pages;
 
-import com.automationexercise.pages.components.HeaderComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.slf4j.Logger;
@@ -13,8 +12,6 @@ import org.slf4j.LoggerFactory;
 public class RegisterPage extends BasePage {
 
     private static final Logger log =  LoggerFactory.getLogger(RegisterPage.class);
-
-    public final HeaderComponent header = new HeaderComponent();
 
     // ==================== LOCATORS ====================
 
