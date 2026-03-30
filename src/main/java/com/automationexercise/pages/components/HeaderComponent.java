@@ -52,7 +52,7 @@ public class HeaderComponent extends BasePage {
      * Clicks the 'Signup / Login' link in the navigation bar.
      */
     @Step("Click 'Signup / Login' link")
-    public void ClickSignupLogin() {
+    public void clickSignupLogin() {
         log.info("Clicking 'Signup / Login' link");
         click(SIGNUP_LOGIN_LINK);
     }
@@ -61,7 +61,7 @@ public class HeaderComponent extends BasePage {
      * Clicks the 'Logout' link in the navigation bar.
      */
     @Step("Click 'Logout' link")
-    public void ClickLogout() {
+    public void clickLogout() {
         log.info("Clicking 'Logout' link");
         click(LOGOUT_LINK);
     }
@@ -70,7 +70,7 @@ public class HeaderComponent extends BasePage {
      * Clicks the 'Delete Account' link in the navigation bar.
      */
     @Step("Click 'Delete Account' link")
-    public void ClickDeleteAccount() {
+    public void clickDeleteAccount() {
         log.info("Clicking 'Delete Account' link");
         click(DELETE_ACCOUNT_LINK);
     }
@@ -79,7 +79,7 @@ public class HeaderComponent extends BasePage {
      * Clicks the 'Cart' link in the navigation bar.
      */
     @Step("Click 'Cart' link")
-    public void ClickCart() {
+    public void clickCart() {
         log.info("Clicking 'Cart' link");
         click(CART_LINK);
     }
@@ -88,7 +88,7 @@ public class HeaderComponent extends BasePage {
      * Click the 'Home' link in the navigation bar.
      */
     @Step("Click 'Home' link")
-    public void ClickHome() {
+    public void clickHome() {
         log.info("Clicking 'Home' link");
         click(HOME_LINK);
     }

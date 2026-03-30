@@ -81,7 +81,7 @@ public class RegisterPage extends BasePage {
      * @param title accepted values: "Mr" or "Mrs"
      */
     @Step("Select title: {title}")
-    public void selectTitle(String title) {
+    public RegisterPage selectTitle(String title) {
         log.info("Selecting title: {}", title);
         if(title.equalsIgnoreCase("Mr")) {
             click(TITLE_MR_RADIO);
@@ -90,6 +90,7 @@ public class RegisterPage extends BasePage {
         } else {
             throw new IllegalArgumentException("Invalid title: '" + title + "'. Accepted: 'Mr', 'Mrs'");
         }
+        return this;
     }
 
     /**
@@ -98,9 +99,10 @@ public class RegisterPage extends BasePage {
      * @param password the account password
      */
     @Step("Enter password")
-    public void enterPassword(String password) {
+    public RegisterPage enterPassword(String password) {
         log.info("Entering password: {}", password);
         type(PASSWORD_INPUT, password);
+        return this;
     }
 
     /**
@@ -111,33 +113,36 @@ public class RegisterPage extends BasePage {
      * @param year  year value (e.g., "1990")
      */
     @Step("Select date of birth: {day} {month} {year}")
-    public void selectDateOfBirth(String day, String month, String year) {
+    public RegisterPage selectDateOfBirth(String day, String month, String year) {
         log.info("Selecting date of birth: {} {} {}", day, month, year);
         selectByVisibleText(DAY_OF_BIRTH_SELECT, day);
         selectByVisibleText(MONTH_OF_BIRTH_SELECT, month);
         selectByVisibleText(YEAR_OF_BIRTH_SELECT, year);
+        return this;
     }
 
     /**
      * Checks the 'Sign up for our newsletter!' checkbox if not already checked.
      */
     @Step("Select 'Sign up for our newsletter!' checkbox")
-    public void selectNewsletterCheckbox() {
+    public RegisterPage selectNewsletterCheckbox() {
         log.info("Selecting newsletter checkbox");
         if (isCheckboxChecked(NEWSLETTER_CHECKBOX)) {
             click(NEWSLETTER_CHECKBOX);
         }
+        return this;
     }
 
     /**
      * Checks the 'Receive special offers from our partners!' checkbox if not already checked.
      */
     @Step("Select 'Receive special offers from our partners!' checkbox")
-    public void selectOptCheckBox() {
+    public RegisterPage selectOptCheckBox() {
         log.info("Selecting opt-in checkbox");
         if (isCheckboxChecked(OPT_CHECKBOX)) {
             click(OPT_CHECKBOX);
         }
+        return this;
     }
 
     /**
@@ -155,7 +160,7 @@ public class RegisterPage extends BasePage {
      * @param mobileNumber mobile phone number
      */
     @Step("Fill address information")
-    public void fillAddressInfo(String firstName, String lastName, String company,
+    public RegisterPage fillAddressInfo(String firstName, String lastName, String company,
                                 String address1, String address2, String country,
                                 String state, String city, String zipcode,
                                 String mobileNumber) {
@@ -170,6 +175,7 @@ public class RegisterPage extends BasePage {
         type(CITY_INPUT, city);
         type(ZIPCODE_INPUT, zipcode);
         type(MOBILE_NUMBER_INPUT, mobileNumber);
+        return this;
     }
 
     /**

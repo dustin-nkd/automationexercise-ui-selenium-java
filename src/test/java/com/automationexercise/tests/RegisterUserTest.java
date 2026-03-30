@@ -18,7 +18,7 @@ public class RegisterUserTest extends BaseTest {
     // Fake instance - generates realistic, randomized test data per test run
     private final Faker faker = new Faker();
 
-    @Test(description = "TC01 -Register User")
+    @Test(description = "TC01 - Register User")
     @Story("Register a new user successfully")
     @Severity(SeverityLevel.BLOCKER)
     @Description("""

@@ -30,6 +30,7 @@ logs/
 # ===============================
 allure-results/
 allure-report/
+.allure/
 
 # ===============================
 # Selenium artifacts
