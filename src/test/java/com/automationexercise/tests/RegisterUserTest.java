@@ -59,7 +59,7 @@ public class RegisterUserTest extends BaseTest {
                 "Home page should be visible");
 
         // -- Step 4: Click Signup / Login --
-        AuthPage authPage = homePage.clickSignupLogin();
+        AuthPage authPage = homePage.header().clickSignupLogin();
 
         // -- Step 5: Verify 'New User Signup!' is visible --
         Assert.assertEquals(authPage.getNewUserSignupHeadingText(), "New User Signup!",
@@ -99,13 +99,13 @@ public class RegisterUserTest extends BaseTest {
         homePage = accountCreatedPage.clickContinue();
 
         // -- Step 16: Verify logged in as username --
-        Assert.assertTrue(homePage.header.isLoggedInAsVisible(),
+        Assert.assertTrue(homePage.header().isLoggedInAsVisible(),
                 "'Logged in as username' should be visible");
-        Assert.assertEquals(homePage.header.getLoggedInUsername(), name,
+        Assert.assertEquals(homePage.header().getLoggedInUsername(), name,
                 "Logged in username match registered name");
 
         // -- Step 17: Click Delete Account --
-        AccountDeletedPage accountDeletedPage = homePage.clickDeleteAccountPage();
+        AccountDeletedPage accountDeletedPage = homePage.header().clickDeleteAccount();
 
         // -- Step 18: Verify 'ACCOUNT DELETED!' is visible
         Assert.assertEquals(accountDeletedPage.getAccountDeletedHeadingText(), "ACCOUNT DELETED!",

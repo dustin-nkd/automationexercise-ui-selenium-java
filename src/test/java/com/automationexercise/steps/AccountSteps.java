@@ -65,7 +65,7 @@ public class AccountSteps {
         log.info("Setting up account for: name='{}', email='{}'", name, email);
 
         return app.open()
-                .clickSignupLogin()
+                .header().clickSignupLogin()
                 .signUp(name, email)
                 .selectTitle("Mr")
                 .enterPassword(password)

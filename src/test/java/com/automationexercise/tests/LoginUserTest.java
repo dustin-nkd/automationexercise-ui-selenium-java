@@ -50,7 +50,7 @@ public class LoginUserTest extends BaseTest {
                         faker.address().zipCode(),
                         faker.phoneNumber().phoneNumber()
                 )
-                .header.clickLogout();
+                .header().clickLogout();
     }
 
     @Test(description = "TC02 - Login User with correct email and password")
@@ -76,7 +76,7 @@ public class LoginUserTest extends BaseTest {
                 "Home page should be visible");
 
         // -- Step 4: Click Signup / Login --
-        AuthPage authPage = homePage.clickSignupLogin();
+        AuthPage authPage = homePage.header().clickSignupLogin();
 
         // -- Step 5: Verify 'Login to your account' is visible
         Assert.assertEquals(authPage.getLoginHeadingText(), "Login to your account",
@@ -86,13 +86,13 @@ public class LoginUserTest extends BaseTest {
         homePage = authPage.login(email, password);
 
         // -- Step 8: Verify logged in as username --
-        Assert.assertTrue(homePage.header.isLoggedInAsVisible(),
+        Assert.assertTrue(homePage.header().isLoggedInAsVisible(),
                 "'Logged in as username' should be visible");
-        Assert.assertEquals(homePage.header.getLoggedInUsername(), name,
-                "Logged in username shhould match registered name");
+        Assert.assertEquals(homePage.header().getLoggedInUsername(), name,
+                "Logged in username should match registered name");
 
         // -- Step 9: Click Delete Account --
-        AccountDeletedPage accountDeletedPage = homePage.clickDeleteAccountPage();
+        AccountDeletedPage accountDeletedPage = homePage.header().clickDeleteAccount();
 
         // -- Step 10: Verify 'ACCOUNT DELETED!' is visible --
         Assert.assertEquals(accountDeletedPage.getAccountDeletedHeadingText(), "ACCOUNT DELETED!",
@@ -125,7 +125,7 @@ public class LoginUserTest extends BaseTest {
                 "Home page should be visible");
 
         // -- Step 4: Click Signup / Login --
-        AuthPage authPage = homePage.clickSignupLogin();
+        AuthPage authPage = homePage.header().clickSignupLogin();
 
         // -- Step 5: Verify 'Login to your account' is visible
         Assert.assertEquals(authPage.getLoginHeadingText(), "Login to your account",

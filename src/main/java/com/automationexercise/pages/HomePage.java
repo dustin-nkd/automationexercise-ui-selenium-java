@@ -8,54 +8,38 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Page Object for the Home Page.
- * Navigation to this page is handled by App.open() - not by this class.
- * Header interactions are delegated to HeaderComponent.
+ * Does NOT hold HeaderComponent as a field - avoids circular dependency.
+ * Header navigation accessed via header() getter.
  */
 public class HomePage extends BasePage{
 
     private static final Logger log = LoggerFactory.getLogger(HomePage.class);
 
-    // Header component - shared across all pages, instantiated per Page
-    public final HeaderComponent header = new HeaderComponent();
-
     // ==================== LOCATORS ====================
 
-    // Hero slide - unique to home page, confirms correct page is loaded
     private static final By HOME_SLIDER = By.cssSelector("#slider");
 
     // ==================== ACTIONS ====================
 
     /**
-     * Verifies home page is fully loaded by checking slider and navbar.
+     * Verifies home page is fully loaded.
      *
-     * @return true if home page is visible
+     * @return true if slider and navbar are both visible
      */
     @Step("Verify home page is visible")
     public boolean isHomePageVisible() {
-        boolean visible = isDisplayed(HOME_SLIDER) && header.isNavBarVisible();
+        boolean visible = isDisplayed(HOME_SLIDER) && header().isNavBarVisible();
         log.info("Home page visible {}: ", visible);
         return visible;
     }
 
     /**
-     * Clicks 'Signup / Login' and returns the AuthPage.
+     * Returns HeaderComponent for navigation.
+     * Instantiated fresh each call - consistent with By locator approach (no caching).
      *
-     * @return AuthPage instance
+     * @return HeaderComponent instance
      */
-    @Step("Navigate to Signup / Login page")
-    public AuthPage clickSignupLogin() {
-        header.clickSignupLogin();
-        return new AuthPage();
-    }
-
-    /**
-     * Clicks 'Delete Account' and returns the DeleteAccountPage.
-     *
-     * @return DeleteAccountPage instance
-     */
-    @Step("Click 'Delete Account' and navigate to Account Deleted page")
-    public AccountDeletedPage clickDeleteAccountPage() {
-        header.clickDeleteAccount();
-        return new AccountDeletedPage();
+    public HeaderComponent header() {
+        return new HeaderComponent();
     }
 }

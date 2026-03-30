@@ -3,6 +3,7 @@ package com.automationexercise;
 import com.automationexercise.config.ConfigManager;
 import com.automationexercise.driver.Drivermanager;
 import com.automationexercise.pages.HomePage;
+import com.automationexercise.pages.components.HeaderComponent;
 import io.qameta.allure.Step;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,5 +36,14 @@ public class App {
         log.info("Opening application at: {}", url);
         Drivermanager.getDriver().get(url);
         return new HomePage();
+    }
+
+    /**
+     * Returns HeaderComponent for navigation.
+     *
+     * @return HeaderComponent instance
+     */
+    public HeaderComponent header() {
+        return new HeaderComponent();
     }
 }
