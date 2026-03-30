@@ -44,7 +44,7 @@ public class HomePage extends BasePage{
      */
     @Step("Navigate to Signup / Login page")
     public AuthPage clickSignupLogin() {
-        header.ClickSignupLogin();
+        header.clickSignupLogin();
         return new AuthPage();
     }
 
@@ -55,7 +55,7 @@ public class HomePage extends BasePage{
      */
     @Step("Click 'Delete Account' and navigate to Account Deleted page")
     public AccountDeletedPage clickDeleteAccountPage() {
-        header.ClickDeleteAccount();
+        header.clickDeleteAccount();
         return new AccountDeletedPage();
     }
 }

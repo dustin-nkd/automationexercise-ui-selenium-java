@@ -11,6 +11,7 @@
     <test name="Smoke Tests">
         <classes>
             <class name="com.automationexercise.tests.RegisterUserTest"/>
+            <class name="com.automationexercise.tests.LoginUserTest"/>
         </classes>
     </test>
 
