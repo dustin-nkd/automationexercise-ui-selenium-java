@@ -18,11 +18,12 @@ public class AuthPage extends BasePage {
 
     // ==================== LOCATORS ====================
 
-    // -- Signup section --
+    // -- Login section --
     private static final By LOGIN_HEADING           = By.cssSelector(".login-form h2");
     private static final By LOGIN_EMAIL_INPUT       = By.cssSelector(".login-form input[data-qa='login-email']");
     private static final By LOGIN_PASSWORD_INPUT    = By.cssSelector(".login-form input[data-qa='login-password']");
     private static final By LOGIN_BUTTON            = By.cssSelector(".login-form button[data-qa='login-button']");
+    private static final By LOGIN_ERROR_MESSAGE     = By.cssSelector(".login-form p");
 
     // -- Signup section --
     private static final By NEW_USER_SIGNUP_HEADING = By.cssSelector(".signup-form h2");
@@ -69,6 +70,36 @@ public class AuthPage extends BasePage {
         type(LOGIN_PASSWORD_INPUT, password);
         click(LOGIN_BUTTON);
         return new HomePage();
+    }
+
+    /**
+     * Returns the error message text shown after failed login attempt.
+     * Used for assertion in TC03.
+     *
+     * @return error message text
+     */
+    @Step("Get login error message text")
+    public String getLoginErrorMessage() {
+        String message = getText(LOGIN_ERROR_MESSAGE);
+        log.info("Login error message: {}", message);
+        return message;
+    }
+
+    /**
+     * Enters invalid credentials and clicks Login - stays on AuthPage.
+     * Used for negative test cases where login is expected to fail.
+     *
+     * Separate from login() which returns HomePage - different post-action state.
+     *
+     * @param email    invalid email address
+     * @param password invalid password
+     */
+    @Step("Attempt login with invalid credentials - email: {email}")
+    public void loginWithInvalidCredentials(String email, String password) {
+        log.info("Attempting login with invalid credentials - email: {}", email);
+        type(LOGIN_EMAIL_INPUT, email);
+        type(LOGIN_PASSWORD_INPUT, password);
+        click(LOGIN_BUTTON);
     }
 
     // ==================== SIGNUP ACTIONS ====================

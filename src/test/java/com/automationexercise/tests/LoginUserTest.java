@@ -100,4 +100,43 @@ public class LoginUserTest extends BaseTest {
 
         accountDeletedPage.clickContinue();
     }
+
+    @Test(description = "TC03 - Login User with incorrect email and password")
+    @Story("Login with invalid credentials")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("""
+        Steps:
+        1. Navigate to home page
+        2. Verify home page is visible
+        3. Click Signup / Login
+        4. Verify 'Login to your account' is visible
+        5. Enter incorrect email and password, click Login
+        6. Verify error 'Your email or password is incorrect!' is visible
+        """)
+    public void testLoginWithIncorrectCredentials() {
+
+        // -- Invalid credentials - guaranteed to not exist --
+        String invalidEmail    = faker.internet().emailAddress();
+        String invalidPassword = faker.text().text(12);
+
+        // -- Step 2, 3: Open app and verify home page --
+        HomePage homePage = app.open();
+        Assert.assertTrue(homePage.isHomePageVisible(),
+                "Home page should be visible");
+
+        // -- Step 4: Click Signup / Login --
+        AuthPage authPage = homePage.clickSignupLogin();
+
+        // -- Step 5: Verify 'Login to your account' is visible
+        Assert.assertEquals(authPage.getLoginHeadingText(), "Login to your account",
+                "'Login to your account' heading should be visible");
+
+        // -- Step 6, 7: Enter invalid credentials and click login --
+        authPage.loginWithInvalidCredentials(invalidEmail, invalidPassword);
+
+        // -- Step 8: Verify error message --
+        Assert.assertEquals(authPage.getLoginErrorMessage(),
+                "Your email or password is incorrect!",
+                "Error message should be visible after failed login");
+    }
 }
