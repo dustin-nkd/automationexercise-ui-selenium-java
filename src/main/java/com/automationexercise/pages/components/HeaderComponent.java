@@ -21,12 +21,13 @@ public class HeaderComponent extends BasePage {
 
     // ==================== LOCATORS ====================
 
-    private static final By NAV_BAR = By.cssSelector("#header .navbar-nav");
+    private static final By NAV_BAR             = By.cssSelector("#header .navbar-nav");
     private static final By SIGNUP_LOGIN_LINK   = By.cssSelector("a[href='/login']");
     private static final By LOGOUT_LINK         = By.cssSelector("a[href='/logout']");
     private static final By DELETE_ACCOUNT_LINK = By.cssSelector("a[href='/delete_account']");
     private static final By CART_LINK           = By.cssSelector("a[href='/view_cart']");
     private static final By HOME_LINK           = By.cssSelector("ul.navbar-nav a[href=\"/\"]");
+    private static final By CONTACT_US_LINK     = By.cssSelector("a[href='/contact_us']");
     private static final By LOGGED_IN_AS_LABEL  = By.cssSelector("li a i.fa-user + b");
 
     // ==================== NAVIGATION ACTIONS ====================
@@ -89,6 +90,18 @@ public class HeaderComponent extends BasePage {
         log.info("Clicking 'Home' link");
         click(HOME_LINK);
         return new HomePage();
+    }
+
+    /**
+     * Clicks 'Contact Us' link and returns ContactUsPage.
+     *
+     * @return ContactUsPage instance
+     */
+    @Step("Click 'Contact Us' link")
+    public ContactUsPage clickContactUs() {
+        log.info("Clicking 'Contact Us' link");
+        click(CONTACT_US_LINK);
+        return new ContactUsPage();
     }
 
     // ==================== STATE CHECKS ====================
