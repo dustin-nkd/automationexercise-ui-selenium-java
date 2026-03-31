@@ -274,6 +274,27 @@ public abstract class BasePage {
         log.debug("JS click on element: {}", locator);
     }
 
+    /**
+     * Accepts a browser native alert dialog (clicks OK).
+     * Waits for alert to be present before accepting.
+     */
+    protected void acceptAlert() {
+        wait.until(ExpectedConditions.alertIsPresent()).accept();
+        log.debug("Alert accepted");
+    }
+
+    /**
+     * Uploads a file by sending the absolute file path to an input[type='file'] element.
+     * Does not click the element - sendKeys triggers file selection directly.
+     *
+     * @param locator  the By locator of input[type='file'] element
+     * @param filePath absolute path to the file to upload
+     */
+    protected void uploadFile(By locator, String filePath) {
+        log.debug("Uploading file: {}", filePath);
+        waitForPresence(locator).sendKeys(filePath);
+    }
+
     // ==================== DYNAMIC LOCATOR HELPER ====================
 
     /**
