@@ -10,9 +10,9 @@
 
     <test name="Smoke Tests">
         <classes>
-<!--            <class name="com.automationexercise.tests.RegisterUserTest"/>-->
+            <class name="com.automationexercise.tests.RegisterUserTest"/>
 <!--            <class name="com.automationexercise.tests.LoginUserTest"/>-->
-            <class name="com.automationexercise.tests.LogoutUserTest"/>
+<!--            <class name="com.automationexercise.tests.LogoutUserTest"/>-->
         </classes>
     </test>
 

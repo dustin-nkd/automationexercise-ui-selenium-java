@@ -279,7 +279,7 @@ public abstract class BasePage {
     /**
      * Builds a dynamic XPath or CSS locator by replacing a placeholder with a value.
      * Avoids string concatenation scattered across Page classes (DRY).
-     *
+     * <p>
      * Example usage in a Page class:
      *  private static final String PRODUCT_BY_NAME = "//div[contains(text(),'%s')]"
      *  By locator = buildLocator(PRODUCT_BY_NAME, "Blue Top")
