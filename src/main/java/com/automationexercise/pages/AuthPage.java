@@ -27,6 +27,7 @@ public class AuthPage extends BasePage {
     private static final By SIGNUP_NAME_INPUT       = By.cssSelector(".signup-form input[data-qa='signup-name']");
     private static final By SIGNUP_EMAIL_INPUT      = By.cssSelector(".signup-form input[data-qa='signup-email']");
     private static final By SIGNUP_BUTTON           = By.cssSelector(".signup-form button[data-qa='signup-button']");
+    private static final By SIGNUP_ERROR_MESSAGE    = By.cssSelector(".signup-form p");
 
     // ==================== LOGIN ACTIONS ====================
 
@@ -120,5 +121,33 @@ public class AuthPage extends BasePage {
         type(SIGNUP_EMAIL_INPUT, email);
         click(SIGNUP_BUTTON);
         return new RegisterPage();
+    }
+
+    /**
+     * Enters name and existing email then clicks Signup - expects failure.
+     * Stays on AuthPage after failed signup attempt.
+     * Separate from signUp() which returns RegisterPage on success.
+     *
+     * @param name  username
+     * @param email already registered email address
+     */
+    @Step("Attempt signup with existing email: {email}")
+    public void signUpWithExistingEmail(String name, String email) {
+        log.info("Attempting signup with existing email: {}", email);
+        type(SIGNUP_NAME_INPUT, name);
+        type(SIGNUP_EMAIL_INPUT, email);
+        click(SIGNUP_BUTTON);
+    }
+
+    /**
+     * Returns the error message text shown after failed signup attempt.
+     *
+     * @return error message text
+     */
+    @Step("Get signup error message text")
+    public String getSignupErrorMessage() {
+        String message = getText(SIGNUP_ERROR_MESSAGE);
+        log.info("Signup error message: {}", message);
+        return message;
     }
 }

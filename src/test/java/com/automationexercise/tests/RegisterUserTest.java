@@ -2,6 +2,7 @@ package com.automationexercise.tests;
 
 import com.automationexercise.base.BaseTest;
 import com.automationexercise.pages.*;
+import com.automationexercise.steps.AccountSteps;
 import io.qameta.allure.*;
 import net.datafaker.Faker;
 import org.testng.Assert;
@@ -113,5 +114,62 @@ public class RegisterUserTest extends BaseTest {
 
         // -- Step 19: Click Continue --
         accountDeletedPage.clickContinue();
+    }
+
+    @Test(description = "TC05 - Register User with existing email")
+    @Story("Register with already registered email")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("""
+            Precondition: user account already exists via AccountSteps
+            Steps:
+            1. Navigate to home page
+            2. Verify home page is visible
+            3. Click Signup / Login
+            4. Verify 'New User Signup!' is visible
+            5. Enter name and already registered email, click Signup
+            6. Verify error 'Email Address already exist!' is visible
+            """)
+    public void testRegisterUserWithExistEmail() {
+
+        // -- Precondition: create account first --
+        String name     = faker.name().firstName();
+        String email    = faker.internet().emailAddress();
+        String password = faker.text().text(12);
+
+        new AccountSteps(app)
+                .registerUser(
+                        name, email, password,
+                        faker.name().firstName(),
+                        faker.name().lastName(),
+                        faker.company().name(),
+                        faker.address().streetAddress(),
+                        faker.address().secondaryAddress(),
+                        "Canada",
+                        faker.address().state(),
+                        faker.address().city(),
+                        faker.address().zipCode(),
+                        faker.phoneNumber().phoneNumber()
+                )
+                .header().clickLogout();
+
+        // -- Step 2, 3: Open app and verify home page --
+        HomePage homePage = app.open();
+        Assert.assertTrue(homePage.isHomePageVisible(),
+                "Home page should be visible");
+
+        // -- Step 4: Click Signup / Login --
+        AuthPage authPage = homePage.header().clickSignupLogin();
+
+        // -- Step 5: Verify 'New User Signup!' is visible --
+        Assert.assertEquals(authPage.getNewUserSignupHeadingText(), "New User Signup!",
+                "'New User Signup!' heading should be visible");
+
+        // -- Step 6,7: Enter name + existing email, click Signup --
+        authPage.signUpWithExistingEmail(name, email);
+
+        // -- Step 8: Verify error message --
+        Assert.assertEquals(authPage.getSignupErrorMessage(),
+                "Email Address already exist!",
+                "Error message should be visible after signup with existing email");
     }
 }
