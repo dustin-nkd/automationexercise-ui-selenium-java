@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
+import java.util.List;
 
 /**
  * Base class for all Page Object classes.
@@ -140,6 +141,28 @@ public abstract class BasePage {
     // ==================== CORE INTERACTIONS ====================
 
     /**
+     * Returns all elements matching the given locator.
+     * Always resolves fresh - no caching, consistent with single element approach.
+     *
+     * @param locator the By locator
+     * @return list of matching WebElements, empty list if none found
+     */
+    protected List<WebElement> findAll(By locator) {
+        return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+    }
+
+    /**
+     * Returns the count of elements matching the given locator.
+     * Useful for verifying list sizes without exposing WebElement list to caller.
+     *
+     * @param locator the By locator
+     * @return number of matching elements
+     */
+    protected int countElements(By locator) {
+        return findAll(locator).size();
+    }
+
+    /**
      * Clicks on a web element after waiting for it to be clickable.
      *
      * @param locator the By locator of the element
@@ -248,7 +271,7 @@ public abstract class BasePage {
     protected void scrollToElement(By locator) {
         WebElement element = waitForPresence(locator);
         ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].scrollIntoView({behavior: 'smooth', block: 'start'});",
+                "arguments[0].scrollIntoView({block:'center', inline:'center'});",
                 element
         );
         log.debug("Scrolled to element: {}", locator);
