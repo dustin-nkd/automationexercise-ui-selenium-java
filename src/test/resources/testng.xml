@@ -13,7 +13,8 @@
 <!--            <class name="com.automationexercise.tests.RegisterUserTest"/>-->
 <!--            <class name="com.automationexercise.tests.LoginUserTest"/>-->
 <!--            <class name="com.automationexercise.tests.LogoutUserTest"/>-->
-            <class name="com.automationexercise.tests.ContactUsTest"/>
+<!--            <class name="com.automationexercise.tests.ContactUsTest"/>-->
+            <class name="com.automationexercise.tests.TestCasesTest"/>
         </classes>
     </test>
 
