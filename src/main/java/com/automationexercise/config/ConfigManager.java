@@ -34,7 +34,7 @@ public class ConfigManager {
 
     /**
      * Loads properties from config file into memory.
-     * Called once via static intializer block.
+     * Called once via static initializer block.
      */
     private static void loadProperties() {
         try (FileInputStream fileInputStream = new FileInputStream(CONFIG_FILE_PATH)) {

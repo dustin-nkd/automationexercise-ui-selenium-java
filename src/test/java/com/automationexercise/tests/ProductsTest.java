@@ -61,4 +61,51 @@ public class ProductsTest extends BaseTest {
                 "All product detail fields should be visible: " +
                 "name, category, price, availability, condition, brand");
     }
+
+    @Test(description = "TC09 - Search Product")
+    @Story("Search for a product by name")
+    @Severity(SeverityLevel.NORMAL)
+    @Description(
+            """
+            Steps:
+            1. Navigate to home page
+            2. Verify home page is visible
+            3. Click 'Products' button
+            4. Verify user is on ALL PRODUCTS page
+            5. Enter product name in search input and click search
+            6. Verify 'SEARCHED PRODUCTS' is visible
+            7. Verify all products related to search are visible
+            """)
+    public void testSearchProduct() {
+
+        // -- Search keyword -- using a common keyword likely to return results
+        String searchKeyword = "top";
+
+        // -- Step 2, 3: Open app and verify home page --
+        HomePage homePage = app.open();
+        Assert.assertTrue(homePage.isHomePageVisible(),
+                "Home page should be visible");
+
+        // -- Step 4: Click Products --
+        ProductsPage productsPage = homePage.header().clickProducts();
+
+        // -- Step 5: Verify user is on All Products page --
+        Assert.assertTrue(productsPage.isOnProductsPage(),
+                "User should be navigated to All Products page");
+
+        // -- Step 6: Search for product --
+        productsPage.searchProduct(searchKeyword);
+
+        // -- Step 7: Verify 'SEARCHED PRODUCTS' heading is visible --
+        Assert.assertEquals(productsPage.getSearchedProductsHeadingText(),
+                "SEARCHED PRODUCTS",
+                "'SEARCHED PRODUCTS' heading should be visible");
+
+        // -- Step 8: Verify search results are visible and relevant --
+        Assert.assertTrue(productsPage.getSearchResultCount() > 0,
+                "At least one search result should be visible");
+
+        Assert.assertTrue(productsPage.areAllSearchResultsRelevant(searchKeyword),
+                "All search results should contains keyword: '" + searchKeyword + "'");
+    }
 }

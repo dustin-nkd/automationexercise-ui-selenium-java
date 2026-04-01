@@ -3,8 +3,11 @@ package com.automationexercise.pages;
 import com.automationexercise.pages.components.HeaderComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * Page Object for All Products page (/products).
@@ -15,8 +18,13 @@ public class ProductsPage extends BasePage{
 
     // ==================== LOCATORS ====================
 
-    private static final By ALL_PRODUCTS_HEADING = By.cssSelector(".title b");
-    private static final By PRODUCTS_LIST        = By.cssSelector(".features_items");
+    private static final By ALL_PRODUCTS_HEADING      = By.cssSelector(".title b");
+    private static final By PRODUCTS_LIST             = By.cssSelector(".features_items");
+    private static final By SEARCH_INPUT              = By.cssSelector("#search_product");
+    private static final By SEARCH_BUTTON             = By.cssSelector("#submit_search");
+    private static final By SEARCHED_PRODUCTS_HEADING =  By.cssSelector(".features_items .title");
+    private static final By SEARCH_RESULT_ITEMS       = By.cssSelector(".features_items .product-image-wrapper");
+    private static final By SEARCH_RESULT_ITEMS_NAME  = By.cssSelector(".features_items .productinfo p");
 
     // Dynamic locator template - targets 'View Product' link by position
     // Index is 1-based match CSS nth-child
@@ -73,6 +81,66 @@ public class ProductsPage extends BasePage{
         scrollToElement(buildLocator(VIEW_PRODUCT_LINK_TMPL, index));
         click(buildLocator(VIEW_PRODUCT_LINK_TMPL, index));
         return new ProductDetailPage();
+    }
+
+    /**
+     * Enters product name in search input and clicks search button.
+     * Step 6 - always performed together (YAGNI).
+     *
+     * @param productName the product name to search for
+     */
+    @Step("Search for product: {productName}")
+    public void searchProduct(String productName) {
+        log.info("Searching for product: {}", productName);
+        type(SEARCH_INPUT, productName);
+        click(SEARCH_BUTTON);
+    }
+
+    /**
+     * Returns the 'SEARCHED PRODUCTS' heading text
+     * Used for exact text assertion in TCO9 step 7.
+     *
+     * @return heading text
+     */
+    @Step("Get 'SEARCHED PRODUCTS' heading text")
+    public String getSearchedProductsHeadingText() {
+        return getText(SEARCHED_PRODUCTS_HEADING);
+    }
+
+    /**
+     * Returns the count of product items in the search results.
+     * Used to verify at least one result is visible (TC09 step 8).
+     *
+     * @return number of search result items
+     */
+    @Step("Get search result count")
+    public int getSearchResultCount() {
+        log.info("Search result count: {}", countElements(SEARCH_RESULT_ITEMS));
+        return countElements(SEARCH_RESULT_ITEMS);
+    }
+
+    /**
+     * Verifies all search result product names contain the search keyword,
+     * Ensure results are relevant to the search query (TC09 step 8).
+     *
+     * @param keyword the search keyword to verify against
+     * @return true if all product names contain the keyword (case-insensitive)
+     */
+    @Step("Verify all search results contain keyword: {keyword}")
+    public boolean areAllSearchResultsRelevant(String keyword) {
+        List<WebElement> productNames = findAll(SEARCH_RESULT_ITEMS_NAME);
+
+        if (productNames.isEmpty()) {
+            log.warn("No search results found for keyword: {}", keyword);
+            return false;
+        }
+
+        boolean allRelevant = productNames.stream()
+                .map(e -> e.getText().toLowerCase())
+                .allMatch(name -> name.contains(keyword.toLowerCase()));
+
+        log.info("All search reuslts relevant to '{}': {}", keyword, allRelevant);
+        return allRelevant;
     }
 
     /**
