@@ -29,6 +29,7 @@ public class HeaderComponent extends BasePage {
     private static final By HOME_LINK           = By.cssSelector("ul.navbar-nav a[href=\"/\"]");
     private static final By CONTACT_US_LINK     = By.cssSelector("a[href='/contact_us']");
     private static final By TEST_CASES_LINK     = By.cssSelector("a[href='/test_cases']");
+    private static final By PRODUCTS_LINK       = By.cssSelector("a[href='/products']");
     private static final By LOGGED_IN_AS_LABEL  = By.cssSelector("li a i.fa-user + b");
 
     // ==================== NAVIGATION ACTIONS ====================
@@ -115,6 +116,18 @@ public class HeaderComponent extends BasePage {
         log.info("Clicking 'Test Cases' link");
         click(TEST_CASES_LINK);
         return new TestCasesPage();
+    }
+
+    /**
+     * Clicks 'Products' link and return ProductsPage.
+     *
+     * @return ProductsPage instance
+     */
+    @Step("Click 'Products' link")
+    public ProductsPage clickProducts() {
+        log.info("Clicking 'Products' link");
+        click(PRODUCTS_LINK);
+        return new ProductsPage();
     }
 
     // ==================== STATE CHECKS ====================

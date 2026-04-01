@@ -248,7 +248,7 @@ public abstract class BasePage {
     protected void scrollToElement(By locator) {
         WebElement element = waitForPresence(locator);
         ((JavascriptExecutor) driver).executeScript(
-                "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});",
+                "arguments[0].scrollIntoView({behavior: 'smooth', block: 'start'});",
                 element
         );
         log.debug("Scrolled to element: {}", locator);
@@ -305,11 +305,11 @@ public abstract class BasePage {
      *  private static final String PRODUCT_BY_NAME = "//div[contains(text(),'%s')]"
      *  By locator = buildLocator(PRODUCT_BY_NAME, "Blue Top")
      *
-     * @param template locator template string with %s placeholder
-     * @param value    the dynamic value to inject
-     * @return a By.xpath locator with the value substituted
+     * @param template locator template with %d placeholder
+     * @param index    1-based integer index to inject
+     * @return a By.xpath locator with index substituted
      */
-    protected By buildLocator(String template, String value) {
-        return By.xpath(String.format(template, value));
+    protected By buildLocator(String template, int index) {
+        return By.xpath(String.format(template, index));
     }
 }
