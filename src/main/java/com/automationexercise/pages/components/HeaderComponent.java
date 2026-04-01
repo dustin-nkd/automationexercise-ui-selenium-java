@@ -28,6 +28,7 @@ public class HeaderComponent extends BasePage {
     private static final By CART_LINK           = By.cssSelector("a[href='/view_cart']");
     private static final By HOME_LINK           = By.cssSelector("ul.navbar-nav a[href=\"/\"]");
     private static final By CONTACT_US_LINK     = By.cssSelector("a[href='/contact_us']");
+    private static final By TEST_CASES_LINK     = By.cssSelector("a[href='/test_cases']");
     private static final By LOGGED_IN_AS_LABEL  = By.cssSelector("li a i.fa-user + b");
 
     // ==================== NAVIGATION ACTIONS ====================
@@ -102,6 +103,18 @@ public class HeaderComponent extends BasePage {
         log.info("Clicking 'Contact Us' link");
         click(CONTACT_US_LINK);
         return new ContactUsPage();
+    }
+
+    /**
+     * Clicks 'Test Cases' link and returns TestCasePage.
+     *
+     * @return TestCasesPage instance
+     */
+    @Step("Click 'Test Cases' link")
+    public TestCasesPage clickTestCases() {
+        log.info("Clicking 'Test Cases' link");
+        click(TEST_CASES_LINK);
+        return new TestCasesPage();
     }
 
     // ==================== STATE CHECKS ====================
