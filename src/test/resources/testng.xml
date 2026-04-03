@@ -15,7 +15,9 @@
 <!--            <class name="com.automationexercise.tests.LogoutUserTest"/>-->
 <!--            <class name="com.automationexercise.tests.ContactUsTest"/>-->
 <!--            <class name="com.automationexercise.tests.TestCasesTest"/>-->
-            <class name="com.automationexercise.tests.ProductsTest"/>
+<!--            <class name="com.automationexercise.tests.ProductsTest"/>-->
+            <class name="com.automationexercise.tests.SubscriptionTest"/>
+
         </classes>
     </test>
 

@@ -50,7 +50,7 @@ public class ProductsTest extends BaseTest {
                 "Products list should be visible");
 
         // -- Step 7: Click View Product of first product --
-        ProductDetailPage productDetailPage = productsPage.clickViewProduct(1);
+        ProductDetailPage productDetailPage = productsPage.clickViewProduct("1");
 
         // -- Step 8: Verify user is on product detail page --
         Assert.assertTrue(productDetailPage.isOnProductDetailPage(),

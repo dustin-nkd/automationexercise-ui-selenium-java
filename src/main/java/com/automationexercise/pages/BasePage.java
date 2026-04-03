@@ -329,10 +329,10 @@ public abstract class BasePage {
      *  By locator = buildLocator(PRODUCT_BY_NAME, "Blue Top")
      *
      * @param template locator template with %d placeholder
-     * @param index    1-based integer index to inject
+     * @param value    value to inject
      * @return a By.xpath locator with index substituted
      */
-    protected By buildLocator(String template, int index) {
-        return By.xpath(String.format(template, index));
+    protected By buildLocator(String template, String value) {
+        return By.xpath(String.format(template, String.valueOf(value)));
     }
 }
