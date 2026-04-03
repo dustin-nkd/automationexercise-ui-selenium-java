@@ -4,6 +4,7 @@ import com.automationexercise.config.ConfigManager;
 import com.automationexercise.driver.Drivermanager;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -316,6 +317,18 @@ public abstract class BasePage {
     protected void uploadFile(By locator, String filePath) {
         log.debug("Uploading file: {}", filePath);
         waitForPresence(locator).sendKeys(filePath);
+    }
+
+    /**
+     * Hovers over an element using Selenium Action class.
+     * Required for revealing elements that appear only on mouse hover.
+     *
+     * @param locator the By locator of the element to hover over
+     */
+    protected void hoverOverElement(By locator) {
+        WebElement element = waitForVisible(locator);
+        new Actions(driver).moveToElement(element).perform();
+        log.debug("Hovered over element: {}", locator);
     }
 
     // ==================== DYNAMIC LOCATOR HELPER ====================
