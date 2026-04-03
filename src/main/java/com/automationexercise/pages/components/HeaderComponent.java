@@ -70,17 +70,17 @@ public class HeaderComponent extends BasePage {
         return new AccountDeletedPage();
     }
 
-//    /**
-//     * Clicks the 'Cart' link and returns CartPage.
-//     *
-//     * @return CartPage instance
-//     */
-//    @Step("Click 'Cart' link")
-//    public CartPage clickCart() {
-//        log.info("Clicking 'Cart' link");
-//        click(CART_LINK);
-//        return new CartPage();
-//    }
+    /**
+     * Clicks the 'Cart' link and returns CartPage.
+     *
+     * @return CartPage instance
+     */
+    @Step("Click 'Cart' link")
+    public CartPage clickCart() {
+        log.info("Clicking 'Cart' link");
+        click(CART_LINK);
+        return new CartPage();
+    }
 
     /**
      * Click the 'Home' link and returns HomePage.
