@@ -4,8 +4,11 @@ import com.automationexercise.pages.components.FooterComponent;
 import com.automationexercise.pages.components.HeaderComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * Page Object for the Cart Page (/view_cart).
@@ -16,7 +19,12 @@ public class CartPage extends BasePage {
 
     // ==================== LOCATORS ====================
 
-    private static final By CART_PAGE_TITLE = By.cssSelector("#cart_info");
+    private static final By CART_PAGE_TITLE  = By.cssSelector("#cart_info");
+    private static final By CART_ITEMS       = By.cssSelector("#cart_info tbody tr");
+    private static final By CART_ITEM_NAME   = By.cssSelector("#cart_info tbody tr td.cart_description h4 a");
+    private static final By CART_ITEM_PRICES = By.cssSelector("#cart_info tbody tr td.cart_price p");
+    private static final By CART_ITEM_QTYS   = By.cssSelector("#cart_info tbody tr td.cart_quantity button");
+    private static final By CART_ITEM_TOTALS = By.cssSelector("#cart_info tbody tr td.cart_total p");
 
     // ==================== ACTIONS ====================
 
@@ -31,6 +39,76 @@ public class CartPage extends BasePage {
         boolean onPage = getCurrentUrl().contains("/view_cart");
         log.info("On Cart page: {}", onPage);
         return onPage;
+    }
+
+    /**
+     * Retursn the number of items in the cart.
+     *
+     * @return cart item count
+     */
+    @Step("Get cart item count")
+    public int getCartItemCount() {
+        int count = countElements(CART_ITEMS);
+        log.info("Cart item count: {}", count);
+        return count;
+    }
+
+    /**
+     * Verifies all cart item prices, quantities and totals are visible.
+     * TC12 step 10 - checks each row has price, qty=1, and total visible.
+     *
+     * @return true if all items have visible price, quantity and total
+     */
+    @Step("Verify cart items prices, quantities and totals are visible")
+    public boolean areCartItemDetailsVisible() {
+        List<WebElement> prices = findAll(CART_ITEM_PRICES);
+        List<WebElement> qtys   = findAll(CART_ITEM_QTYS);
+        List<WebElement> totals = findAll(CART_ITEM_TOTALS);
+
+        if (prices.isEmpty() || qtys.isEmpty() || totals.isEmpty()) {
+            log.warn("Cart item details not found");
+            return false;
+        }
+
+        boolean pricesVisible = prices.stream().allMatch(WebElement::isDisplayed);
+        boolean qtysVisible = qtys.stream().allMatch(WebElement::isDisplayed);
+        boolean totalsVisible = totals.stream().allMatch(WebElement::isDisplayed);
+
+        log.info("Cart details visible - prices: {}, quantities: {}, totals: {}",
+                pricesVisible, qtysVisible, totalsVisible);
+
+        return pricesVisible && qtysVisible && totalsVisible;
+    }
+
+    /**
+     * Verifies each cart item's total equals its price multiplied by quantity.
+     * TC12 step 10 - validates price calculation correctness.
+     *
+     * @return true if all totals are correct
+     */
+    @Step("Verify cart item totals are calculated correctly")
+    public boolean areCartTotalsCorrect() {
+        List<WebElement> prices = findAll(CART_ITEM_PRICES);
+        List<WebElement> qtys = findAll(CART_ITEM_QTYS);
+        List<WebElement> totals = findAll(CART_ITEM_TOTALS);
+
+        for (int i = 0; i < prices.size(); i++) {
+            // Parse price value - strip "Rs." prefix and whitespace
+            int price    = parsePrice(prices.get(i).getText());
+            int qty      = Integer.parseInt(qtys.get(i).getText().trim());
+            int total    = parsePrice(totals.get(i).getText());
+            int expected = price * qty;
+
+            if (total != expected) {
+                log.warn("Total mismatch at row {}: price={} * qty={} = {} but total={}",
+                        i + 1, price, qty, expected, total);
+                return false;
+            }
+
+            log.info("Row {}: price={} * qty={} = total={} ✓",  i + 1, price, qty, total);
+        }
+
+        return true;
     }
 
     /**
@@ -50,5 +128,18 @@ public class CartPage extends BasePage {
      */
     public FooterComponent footer() {
         return new FooterComponent();
+    }
+
+    // ==================== PRIVATE HELPERS ====================
+
+    /**
+     * Parses a price string into an integer.
+     * Strips currency prefix (e.g. "Rs. 500" -> 500).
+     *
+     * @param priceText raw price text from the page
+     * @return integer price value
+     */
+    private int parsePrice(String priceText) {
+        return Integer.parseInt(priceText.replaceAll("[^0-9]", "").trim());
     }
 }

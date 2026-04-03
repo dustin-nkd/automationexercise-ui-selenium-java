@@ -1,5 +1,6 @@
 package com.automationexercise.pages;
 
+import com.automationexercise.pages.components.CartModalComponent;
 import com.automationexercise.pages.components.HeaderComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -30,6 +31,14 @@ public class ProductsPage extends BasePage{
     // Index is 1-based match CSS nth-child
     private static final String VIEW_PRODUCT_LINK_TMPL =
             "(//a[contains(@href, '/product_details')])[%s]";
+
+    // -- Add to cart overlay (visible on hover) --
+    private static final String ADD_TO_CART_BTN_TMPL =
+            "(//div[@class='product-image-wrapper'])[%s]//a[contains(@data-product-id,'')]";
+    private static final String PRODUCT_OVERLAY_TMPL =
+            "(//div[@class='product-image-wrapper'])[%s]//div[@class='overlay-content']//a[@class='btn btn-default add-to-cart']";
+    private static final String PRODUCT_IMAGE_WRAPPER_TMPL =
+            "(//div[@class='product-image-wrapper'])[%s]";
 
     // ==================== ACTIONS ====================
 
@@ -141,6 +150,24 @@ public class ProductsPage extends BasePage{
 
         log.info("All search reuslts relevant to '{}': {}", keyword, allRelevant);
         return allRelevant;
+    }
+
+    /**
+     * Hovers over a product and clicks 'Add to cart'.
+     * Uses 1-based index - 1 means firts product.
+     * Return CartModalComponent - modal appears after adding product.
+     *
+     * @param index 1-based position of the product in the list
+     * @return CartModalComponent instance
+     */
+    @Step("Hover over product at index {index} and click 'Add to cart'")
+    public CartModalComponent hoverAndAddToCart(String index) {
+        log.info("Hovering over product at index: {} and adding to cart", index);
+        By productWrapper = buildLocator(PRODUCT_IMAGE_WRAPPER_TMPL, index);
+        By addToCartBtn   = buildLocator(PRODUCT_OVERLAY_TMPL, index);
+        hoverOverElement(productWrapper);
+        click(addToCartBtn);
+        return new CartModalComponent();
     }
 
     /**
