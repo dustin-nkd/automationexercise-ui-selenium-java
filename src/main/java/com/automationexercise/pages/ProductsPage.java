@@ -29,7 +29,7 @@ public class ProductsPage extends BasePage{
     // Dynamic locator template - targets 'View Product' link by position
     // Index is 1-based match CSS nth-child
     private static final String VIEW_PRODUCT_LINK_TMPL =
-            "(//a[contains(@href, '/product_details')])[%d]";
+            "(//a[contains(@href, '/product_details')])[%s]";
 
     // ==================== ACTIONS ====================
 
@@ -76,7 +76,7 @@ public class ProductsPage extends BasePage{
      * @return ProductDetailPage instance
      */
     @Step("Click 'View Product' for product at index: {index}")
-    public ProductDetailPage clickViewProduct(int index) {
+    public ProductDetailPage clickViewProduct(String index) {
         log.info("Clicking 'View Product' for product at index: {}", index);
         scrollToElement(buildLocator(VIEW_PRODUCT_LINK_TMPL, index));
         click(buildLocator(VIEW_PRODUCT_LINK_TMPL, index));

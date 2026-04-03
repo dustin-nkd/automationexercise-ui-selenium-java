@@ -1,5 +1,6 @@
 package com.automationexercise.pages;
 
+import com.automationexercise.pages.components.FooterComponent;
 import com.automationexercise.pages.components.HeaderComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
  * Page Object for the Home Page.
  * Does NOT hold HeaderComponent as a field - avoids circular dependency.
  * Header navigation accessed via header() getter.
+ * Footer interactions accessed via footer() getter.
  */
 public class HomePage extends BasePage{
 
@@ -41,5 +43,15 @@ public class HomePage extends BasePage{
      */
     public HeaderComponent header() {
         return new HeaderComponent();
+    }
+
+    /**
+     * Returns FooterComponent for footer interactions.
+     * Instantiated fresh each call - consistent with no-caching approach.
+     *
+     * @return FooterComponent instance
+     */
+    public FooterComponent footer() {
+        return new FooterComponent();
     }
 }
