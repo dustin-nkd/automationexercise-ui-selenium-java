@@ -1,5 +1,6 @@
 package com.automationexercise.pages;
 
+import com.automationexercise.pages.components.CartModalComponent;
 import com.automationexercise.pages.components.HeaderComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -21,6 +22,8 @@ public class ProductDetailPage extends BasePage{
     private static final By PRODUCT_AVAILABILITY = By.cssSelector(".product-information p:nth-child(6)");
     private static final By PRODUCT_CONDITION    = By.cssSelector(".product-information p:nth-child(7)");
     private static final By PRODUCT_BRAND        = By.cssSelector(".product-information p:nth-child(8)");
+    private static final By QUANTITY_INPUT       = By.cssSelector("#quantity");
+    private static final By ADD_TO_CART_BTN      = By.cssSelector("button.cart");
 
     // ==================== ACTIONS ====================
 
@@ -119,6 +122,30 @@ public class ProductDetailPage extends BasePage{
     @Step("Get product brand")
     public String getProductBrand() {
         return getText(PRODUCT_BRAND);
+    }
+
+    /**
+     * Sets the product quantity.
+     * Clears existing value types new quantity.
+     *
+     * @param quantity the desired quantity
+     */
+    @Step("Set product quantity to: {quantity}")
+    public void setQuantity(int quantity) {
+        log.info("Setting quantity to: {}", quantity);
+        type(QUANTITY_INPUT, String.valueOf(quantity));
+    }
+
+    /**
+     * Clicks 'Add to cart' button and returns CartModalComponent.
+     *
+     * @return CartModalComponent instance
+     */
+    @Step("Click 'Add to cart' button")
+    public CartModalComponent clickAddToCart() {
+        log.info("Clicking 'Add to cart' button");
+        click(ADD_TO_CART_BTN);
+        return new CartModalComponent();
     }
 
     /**

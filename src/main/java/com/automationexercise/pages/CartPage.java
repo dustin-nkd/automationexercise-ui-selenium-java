@@ -112,6 +112,23 @@ public class CartPage extends BasePage {
     }
 
     /**
+     * Returns the quantity of a cart item at the given position.
+     * Uses 1-based index -1 means first cart item.
+     *
+     * @param index 1-based position of the cart item
+     * @return quantity as integer
+     */
+    @Step("Get quantity of cart item at index: {index}")
+    public int getCartItemQuantity(int index) {
+        List<WebElement> qtys = findAll(CART_ITEM_QTYS);
+        int quantity = Integer.parseInt(
+                qtys.get(index - 1).getText().trim()
+        );
+        log.info("Cart item {} quantity: {}", index, quantity);
+        return quantity;
+    }
+
+    /**
      * Returns HeaderComponent for navigation.
      *
      * @return HeaderComponent instance
