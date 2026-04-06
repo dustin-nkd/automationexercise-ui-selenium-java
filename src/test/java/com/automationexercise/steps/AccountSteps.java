@@ -78,4 +78,26 @@ public class AccountSteps {
                 .clickCreateAccount()
                 .clickContinue();
     }
+
+    /**
+     * Registers a new user with minimal required data.
+     * Uses sensible defaults for optional fields.
+     * Convienient overload for tests that don't need specific address details.
+     *
+     * @param name     display name
+     * @param email    unique email addess
+     * @param password account password
+     * @return HomePage instance in logged-in state
+     */
+    public HomePage registerUser(String name, String email, String password) {
+        log.info("Setting up account with minimal data for: '{}'", name);
+        return registerUser(
+                name, email, password,
+                "Test", "User", "Test Company",
+                "123 Test Street", "Apt 1",
+                "Canada",
+                "Ontario", "Toronto", "M1M1M1",
+                "0123456789"
+        );
+    }
 }
