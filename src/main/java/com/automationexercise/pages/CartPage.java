@@ -1,5 +1,6 @@
 package com.automationexercise.pages;
 
+import com.automationexercise.pages.components.CheckoutModalComponent;
 import com.automationexercise.pages.components.FooterComponent;
 import com.automationexercise.pages.components.HeaderComponent;
 import io.qameta.allure.Step;
@@ -19,12 +20,13 @@ public class CartPage extends BasePage {
 
     // ==================== LOCATORS ====================
 
-    private static final By CART_PAGE_TITLE  = By.cssSelector("#cart_info");
-    private static final By CART_ITEMS       = By.cssSelector("#cart_info tbody tr");
-    private static final By CART_ITEM_NAME   = By.cssSelector("#cart_info tbody tr td.cart_description h4 a");
-    private static final By CART_ITEM_PRICES = By.cssSelector("#cart_info tbody tr td.cart_price p");
-    private static final By CART_ITEM_QTYS   = By.cssSelector("#cart_info tbody tr td.cart_quantity button");
-    private static final By CART_ITEM_TOTALS = By.cssSelector("#cart_info tbody tr td.cart_total p");
+    private static final By CART_PAGE_TITLE         = By.cssSelector("#cart_info");
+    private static final By CART_ITEMS              = By.cssSelector("#cart_info tbody tr");
+    private static final By CART_ITEM_NAME          = By.cssSelector("#cart_info tbody tr td.cart_description h4 a");
+    private static final By CART_ITEM_PRICES        = By.cssSelector("#cart_info tbody tr td.cart_price p");
+    private static final By CART_ITEM_QTYS          = By.cssSelector("#cart_info tbody tr td.cart_quantity button");
+    private static final By CART_ITEM_TOTALS        = By.cssSelector("#cart_info tbody tr td.cart_total p");
+    private static final By PROCEED_TO_CHECKOUT_BTN = By.cssSelector(".btn.btn-default.check_out");
 
     // ==================== ACTIONS ====================
 
@@ -126,6 +128,33 @@ public class CartPage extends BasePage {
         );
         log.info("Cart item {} quantity: {}", index, quantity);
         return quantity;
+    }
+
+    /**
+     * Clicks 'Proceed To Checkout' button.
+     * Returns CheckoutModalComponent - shown when user is not logged in.
+     *
+     * @return CheckoutModalComponent instance
+     */
+    @Step("Click 'Proceed To Checkout' button")
+    public CheckoutModalComponent clickProceedToCheckout() {
+        log.info("Clicking 'Proceed To Checkout' button");
+        click(PROCEED_TO_CHECKOUT_BTN);
+        return new CheckoutModalComponent();
+    }
+
+    /**
+     * Clicks 'Proceed To Checkout' when user is logged in.
+     * Navigates directly to CheckoutPage - no modal appears.
+     * Separate from clickProceedToCheckout() which returns CheckoutModalComponent.
+     *
+     * @return CheckoutPage instance
+     */
+    @Step("Click 'Proceed To Checkout' - logged in, navigate to CheckoutPage")
+    public CheckoutPage clickProceedToCheckoutLoggedIn() {
+        log.info("Clicking 'Proceed To Checkout' - logged in");
+        click(PROCEED_TO_CHECKOUT_BTN);
+        return new CheckoutPage();
     }
 
     /**
