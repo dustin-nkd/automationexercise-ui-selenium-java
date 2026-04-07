@@ -4,6 +4,7 @@ import com.automationexercise.base.BaseTest;
 import com.automationexercise.pages.*;
 import com.automationexercise.pages.components.CartModalComponent;
 import com.automationexercise.pages.components.CheckoutModalComponent;
+import com.automationexercise.steps.AccountSteps;
 import io.qameta.allure.*;
 import net.datafaker.Faker;
 import org.testng.Assert;
@@ -13,6 +14,7 @@ import org.testng.annotations.Test;
  * Test class for Place Order feature.
  * TC14: Place Order - Register while Checkout.
  * TC15: Place Order - Register before checkout.
+ * TC16: Place Order - Login before checkout.
  */
 @Epic("Orders")
 @Feature("Place Order")
@@ -260,6 +262,102 @@ public class PlaceOrderTest extends BaseTest {
                 "Order placed success message should match");
 
         // -- Step 17, 18: Delete account and verify --
+        homePage = paymentPage.clickContinue();
+        AccountDeletedPage accountDeletedPage = homePage.header().clickDeleteAccount();
+        Assert.assertEquals(accountDeletedPage.getAccountDeletedHeadingText(),
+                "ACCOUNT DELETED!",
+                "'ACCOUNT DELETED!' should be visible");
+        accountDeletedPage.clickContinue();
+    }
+
+    @Test(description = "TC16 - Place Order: Login before Checkout")
+    @Story("Login before checkout and place order successfully")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("""
+        Precondition: account created via AccountSteps
+        Steps:
+        1. Navigate to home page and verify visible
+        2. Click Signup / Login, fill credentials and login
+        3. Verify logged in as username
+        4. Add product to cart
+        5. Click Cart, verify cart page
+        6. Click Proceed To Checkout — direct (logged in)
+        7. Verify address details and order review
+        8. Enter comment, click Place Order
+        9. Fill payment details, Pay and Confirm
+        10. Verify order success message
+        11. Delete account, verify ACCOUNT DELETED
+        """)
+    public void testPlaceOrderLoginBeforeCheckout() {
+
+        // -- Generate test data --
+        String name     = faker.name().firstName();
+        String email    = faker.internet().emailAddress();
+        String password = faker.text().text(12);
+        String comment  = faker.lorem().sentence();
+
+        // -- Precondition: create account then logout --
+        new AccountSteps(app)
+                .registerUser(name, email, password)
+                .header().clickLogout();
+
+        // -- Step 2,3: Open app and verify home page --
+        HomePage homePage = app.open();
+        Assert.assertTrue(homePage.isHomePageVisible(),
+                "Home page should be visible");
+
+        // -- Step 4: Clicks Signup / Login and login --
+        AuthPage authPage = homePage.header().clickSignupLogin();
+        homePage = authPage.login(email, password);
+
+        // -- Step 6: Verify logged in as username --
+        Assert.assertTrue(homePage.header().isLoggedInAsVisible(),
+                "'Logged In as username' should be visible");
+        Assert.assertEquals(homePage.header().getLoggedInUsername(), name,
+                "Logged in username should match registered name");
+
+        // -- Step 7: Add product to cart --
+        ProductsPage productsPage = homePage.header().clickProducts();
+        CartModalComponent cartModal = productsPage.hoverAndAddToCart("1");
+        CartPage cartPage = cartModal.clickViewCart();
+
+        // -- Step 8, 9: Verify cart page --
+        Assert.assertTrue(cartPage.isOnCartPage(),
+                "Cart page should be visible");
+
+        // -- Step 10: Click Proceed To Checkout - logged in, no modal --
+        CheckoutPage checkoutPage = cartPage.clickProceedToCheckoutLoggedIn();
+
+        // -- Step 11: Verify address details and order review --
+        Assert.assertTrue(checkoutPage.isDeliveryAddressVisible(),
+                "Delivery address should be visible");
+        Assert.assertTrue(checkoutPage.isBillingAddressVisible(),
+                "Billing address should be visible");
+        Assert.assertTrue(checkoutPage.isOrderReviewVisible(),
+                "Order review should be visible");
+
+        // -- Step 12: Enter comment and place order --
+        checkoutPage.enterComment(comment);
+        PaymentPage paymentPage = checkoutPage.clickPlaceOrder();
+
+        // -- Step 13, 14: Fill payment details and confirm --
+        paymentPage.fillPaymentDetails(
+                faker.name().fullName(),
+                faker.finance().creditCard(),
+                String.valueOf(faker.number().numberBetween(100, 999)),
+                String.valueOf(faker.number().numberBetween(1, 12)),
+                String.valueOf(faker.number().numberBetween(2025, 2030))
+                );
+        paymentPage.clickPayAndConfirmOrder();
+
+        // -- Step 15: Verify success message --
+        Assert.assertTrue(paymentPage.isSuccessMessageVisible(),
+                "Order success message should be visible");
+        Assert.assertEquals(paymentPage.getOrderSuccessMessageText(),
+                "ORDER PLACED!",
+                "Order placed success message should match");
+
+        // -- Step 16, 17: Delete account and verify --
         homePage = paymentPage.clickContinue();
         AccountDeletedPage accountDeletedPage = homePage.header().clickDeleteAccount();
         Assert.assertEquals(accountDeletedPage.getAccountDeletedHeadingText(),
