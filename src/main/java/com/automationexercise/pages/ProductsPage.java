@@ -41,6 +41,12 @@ public class ProductsPage extends BasePage{
     private static final String PRODUCT_IMAGE_WRAPPER_TMPL =
             "(//div[@class='product-image-wrapper'])[%s]";
 
+    // Add to cart button within search results - overlay appears on hover
+    private static final String SEARCH_RESULT_ADD_TO_CART_TMPL =
+            "(//div[@class='overlay-content']//a[@class='btn btn-default add-to-cart'])[%d]";
+    private static final String SEARCH_RESULT_OVERLAY_TMPL =
+            "(//div[@class='features_items']//div[@class='product-image-wrapper'])[%d]";
+
     // ==================== ACTIONS ====================
 
     /**
@@ -169,6 +175,33 @@ public class ProductsPage extends BasePage{
         hoverOverElement(productWrapper);
         click(addToCartBtn);
         return new CartModalComponent();
+    }
+
+    /**
+     * Adds all search result products to cart one by one.
+     * Hoves over each product, clicks Add to cart, then continues shopping
+     * until all products are added. Returns CartModalComponent of last product.
+     *
+     * @return CartModalComponent of the last product added
+     */
+    @Step("Add all search result products to cart")
+    public CartModalComponent addAllSearchResultsToCart() {
+        int count = countElements(SEARCH_RESULT_ITEMS);
+        log.info("Adding all {} search result products to cart", count);
+
+        CartModalComponent modal = null;
+        for (int i = 1; i <= count; i++) {
+            By wrapper = buildLocator(SEARCH_RESULT_OVERLAY_TMPL, i);
+            By addToCart = buildLocator(SEARCH_RESULT_ADD_TO_CART_TMPL, i);
+            scrollToElement(wrapper);
+            hoverOverElement(wrapper);
+            click(addToCart);
+            modal = new CartModalComponent();
+            if (i < count) {
+                modal.clickContinueShopping();
+            }
+        }
+        return modal;
     }
 
     /**

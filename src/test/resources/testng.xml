@@ -20,7 +20,9 @@
 <!--            <class name="com.automationexercise.tests.CartTest"/>-->
 <!--            <class name="com.automationexercise.tests.PlaceOrderTest"/>-->
 <!--            <class name="com.automationexercise.tests.CategoryTest"/>-->
-            <class name="com.automationexercise.tests.BrandTest"/>
+<!--            <class name="com.automationexercise.tests.BrandTest"/>-->
+            <class name="com.automationexercise.tests.SearchCartTest"/>
+
         </classes>
     </test>
 
