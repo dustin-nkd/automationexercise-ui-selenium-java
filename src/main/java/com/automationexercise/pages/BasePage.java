@@ -143,24 +143,37 @@ public abstract class BasePage {
 
     /**
      * Returns all elements matching the given locator.
-     * Always resolves fresh - no caching, consistent with single element approach.
+     * Uses explicit wait - throws TimeoutException if no elements found.
+     * Use when elements are EXPECTED to exist.
      *
      * @param locator the By locator
-     * @return list of matching WebElements, empty list if none found
+     * @return list of matching WebElements
      */
     protected List<WebElement> findAll(By locator) {
         return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
 
     /**
-     * Returns the count of elements matching the given locator.
-     * Useful for verifying list sizes without exposing WebElement list to caller.
+     * Returns all elements matching the given locator WITHOUT waiting.
+     * Returns empty list immediately if no elements found - no TimeoutException.
+     * Use when elements may or may not exist (e.g. empty cart verification).
+     *
+     * @param locator the By locator
+     * @return list of matching WebElements, empty list of none found
+     */
+    protected List<WebElement> findAllNoWait(By locator) {
+        return driver.findElements(locator);
+    }
+
+    /**
+     * Returns the count of elements matching the given locator WIHTOUT waiting.
+     * Safe for checking absence of elements - returns 0 instead of throwing.
      *
      * @param locator the By locator
      * @return number of matching elements
      */
     protected int countElements(By locator) {
-        return findAll(locator).size();
+        return findAllNoWait(locator).size();
     }
 
     /**
