@@ -19,8 +19,8 @@
 <!--            <class name="com.automationexercise.tests.SubscriptionTest"/>-->
 <!--            <class name="com.automationexercise.tests.CartTest"/>-->
 <!--            <class name="com.automationexercise.tests.PlaceOrderTest"/>-->
-            <class name="com.automationexercise.tests.CategoryTest"/>
-
+<!--            <class name="com.automationexercise.tests.CategoryTest"/>-->
+            <class name="com.automationexercise.tests.BrandTest"/>
         </classes>
     </test>
 

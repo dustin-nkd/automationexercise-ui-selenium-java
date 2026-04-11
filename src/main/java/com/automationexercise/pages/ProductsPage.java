@@ -2,6 +2,7 @@ package com.automationexercise.pages;
 
 import com.automationexercise.pages.components.CartModalComponent;
 import com.automationexercise.pages.components.HeaderComponent;
+import com.automationexercise.pages.components.SidebarComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -177,5 +178,14 @@ public class ProductsPage extends BasePage{
      */
     public HeaderComponent header() {
         return new HeaderComponent();
+    }
+
+    /**
+     * Returns SidebarComponent for category and brand sidebar navigation.
+     *
+     * @return SidebarComponent instance
+     */
+    public SidebarComponent sidebar() {
+        return new SidebarComponent();
     }
 }
