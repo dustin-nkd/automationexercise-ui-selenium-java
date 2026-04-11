@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Page Object for the Cart Page (/view_cart).
@@ -20,13 +21,15 @@ public class CartPage extends BasePage {
 
     // ==================== LOCATORS ====================
 
-    private static final By CART_PAGE_TITLE         = By.cssSelector("#cart_info");
-    private static final By CART_ITEMS              = By.cssSelector("#cart_info tbody tr");
-    private static final By CART_ITEM_NAME          = By.cssSelector("#cart_info tbody tr td.cart_description h4 a");
-    private static final By CART_ITEM_PRICES        = By.cssSelector("#cart_info tbody tr td.cart_price p");
-    private static final By CART_ITEM_QTYS          = By.cssSelector("#cart_info tbody tr td.cart_quantity button");
-    private static final By CART_ITEM_TOTALS        = By.cssSelector("#cart_info tbody tr td.cart_total p");
-    private static final By PROCEED_TO_CHECKOUT_BTN = By.cssSelector(".btn.btn-default.check_out");
+    private static final By CART_PAGE_TITLE          = By.cssSelector("#cart_info");
+    private static final By CART_ITEMS               = By.cssSelector("#cart_info tbody tr");
+    private static final By CART_ITEM_NAME           = By.cssSelector("#cart_info tbody tr td.cart_description h4 a");
+    private static final By CART_ITEM_PRICES         = By.cssSelector("#cart_info tbody tr td.cart_price p");
+    private static final By CART_ITEM_QTYS           = By.cssSelector("#cart_info tbody tr td.cart_quantity button");
+    private static final By CART_ITEM_TOTALS         = By.cssSelector("#cart_info tbody tr td.cart_total p");
+    private static final By PROCEED_TO_CHECKOUT_BTN  = By.cssSelector(".btn.btn-default.check_out");
+    private static final String REMOVE_ITEM_BTN_TMPL = "//tr[@id='product-%s']//a[@class='cart_quantity_delete']";
+    private static final By FIRST_CART_ITEM_ROW      = By.cssSelector("#cart_info tbody tr:first-child");
 
     // ==================== ACTIONS ====================
 
@@ -155,6 +158,61 @@ public class CartPage extends BasePage {
         log.info("Clicking 'Proceed To Checkout' - logged in");
         click(PROCEED_TO_CHECKOUT_BTN);
         return new CheckoutPage();
+    }
+
+    /**
+     * Clicks the'X' (delete) button for a cart item by product id.
+     * Waits for the row to disappear after removal.
+     *
+     * @param productId the product id matching tr row id (e.g. "1", "2")
+     */
+    @Step("Remove cart item with product id: {productId}")
+    public void removeItem(String productId) {
+        log.info("Removing cart item with product id: {}", productId);
+        By removeBtn = buildLocator(REMOVE_ITEM_BTN_TMPL, productId);
+        By itemRow   = By.id("product-" + productId);
+        click(removeBtn);
+        waitForInvisible(itemRow);
+    }
+
+    /**
+     * Verifies the cart is empty by checking no items remain.
+     *
+     * @return true if cart has no items
+     */
+    @Step("Verify cart is empty")
+    public boolean isCartEmpty() {
+        boolean empty = countElements(CART_ITEMS) == 0;
+        log.info("Cart is empty: {}", empty);
+        return empty;
+    }
+
+    /**
+     * Verifies a specific product is no longer in the cart.
+     *
+     * @param productId the product id to check
+     * @return true if prodcut row is not present
+     */
+    @Step("Verify product with id '{productId}' is removed from cart")
+    public boolean isProductRemoved(String productId) {
+        boolean removed = !isPresent(By.id("product-" + productId));
+        log.info("Product '{} removed from cart: {}", productId, removed);
+        return removed;
+    }
+
+    /**
+     * Returns the product id of the first cart item.
+     * Extracts id from the row's 'id' attribute (format: "product-{id}").
+     * Used to dynamically get product id before removal - avoids hardcoding.
+     *
+     * @return product id string (e.g. "1", "2")
+     */
+    @Step("Get product id of first cart item")
+    public String getFirstCartItemProduct() {
+        String rowId = waitForPresence(FIRST_CART_ITEM_ROW).getAttribute("id");
+        String productId = Objects.requireNonNull(rowId).replace("product-", "");
+        log.info("First cart item product id: '{}'", productId);
+        return productId;
     }
 
     /**
