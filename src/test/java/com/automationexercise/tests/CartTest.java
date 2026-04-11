@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 @Feature("Cart Management")
 public class CartTest extends BaseTest {
 
-//    @Test(description = "TC12 - Add Products in Cart")
+    @Test(description = "TC12 - Add Products in Cart")
     @Story("Add multiple products to cart and verify details")
     @Description("""
             Steps:
@@ -76,7 +76,7 @@ public class CartTest extends BaseTest {
                 "Cart item totals should equal price x quantity");
     }
 
-//    @Test(description = "TC13 - Verify Product quantity in Cart")
+    @Test(description = "TC13 - Verify Product quantity in Cart")
     @Story("Add product with specific quantity and verify in cart")
     @Severity(SeverityLevel.NORMAL)
     @Description("""

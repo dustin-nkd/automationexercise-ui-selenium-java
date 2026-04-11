@@ -347,18 +347,36 @@ public abstract class BasePage {
     // ==================== DYNAMIC LOCATOR HELPER ====================
 
     /**
-     * Builds a dynamic XPath or CSS locator by replacing a placeholder with a value.
-     * Avoids string concatenation scattered across Page classes (DRY).
+     * Builds a dynamic XPath locator by replacing a placeholders with values.
+     * Accepts any number of values via varargs - matches the number of %s placeholder in the template.
      * <p>
-     * Example usage in a Page class:
-     *  private static final String PRODUCT_BY_NAME = "//div[contains(text(),'%s')]"
-     *  By locator = buildLocator(PRODUCT_BY_NAME, "Blue Top")
+     * Examples:
+     *  // 1 placeholder
+     *  buildLocator("//a[contains(text(),'%s')]", "Blue Top")
+     * <p>
+     *  // 2 placeholders
+     *  buildLocator("//div[@id='%s']//a[contains(text(),'%s')]", "Women", "Dress")
+     *
+     * @param template locator template with one or more %s placeholders
+     * @param values   dynamic values to inject - must match placeholder count
+     * @return a By.xpath locator with all values substituted
+     */
+    protected By buildLocator(String template, String... values) {
+        return By.xpath(String.format(template, (Object[]) values));
+    }
+
+    /**
+     * Builds a dynamic XPath locator using an integer index.
+     * Use for position-based locators with %s placeholder.
+     * <p>
+     * Example:
+     *  buildLocator("(//div[@class='product-image-wrapper'])[%d]", 1)
      *
      * @param template locator template with %d placeholder
-     * @param value    value to inject
+     * @param index    1-based integer index to inject
      * @return a By.xpath locator with index substituted
      */
-    protected By buildLocator(String template, String value) {
-        return By.xpath(String.format(template, String.valueOf(value)));
+    protected By buildLocator(String template, int index) {
+        return By.xpath(String.format(template, index));
     }
 }

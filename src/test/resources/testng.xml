@@ -17,8 +17,9 @@
 <!--            <class name="com.automationexercise.tests.TestCasesTest"/>-->
 <!--            <class name="com.automationexercise.tests.ProductsTest"/>-->
 <!--            <class name="com.automationexercise.tests.SubscriptionTest"/>-->
-            <class name="com.automationexercise.tests.CartTest"/>
+<!--            <class name="com.automationexercise.tests.CartTest"/>-->
 <!--            <class name="com.automationexercise.tests.PlaceOrderTest"/>-->
+            <class name="com.automationexercise.tests.CategoryTest"/>
 
         </classes>
     </test>
