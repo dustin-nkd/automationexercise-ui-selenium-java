@@ -100,4 +100,20 @@ public class AccountSteps {
                 "0123456789"
         );
     }
+
+    /**
+     * Logs in with existing credentials via UI flow.
+     * Navigates to login page, enters credentials, returns logged-in HomePage.
+     *
+     * @param email    registered email address
+     * @param password account password
+     * @return HomePage instance in logged-in state
+     */
+    @Step("Precondition: login with email '{email}'")
+    public HomePage loginUser(String email, String password) {
+        log.info("Logging in with email: '{}'", email);
+        return app.open()
+                .header().clickLogout()
+                .login(email, password);
+    }
 }
