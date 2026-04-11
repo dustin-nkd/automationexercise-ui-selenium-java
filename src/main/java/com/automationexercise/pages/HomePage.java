@@ -1,6 +1,6 @@
 package com.automationexercise.pages;
 
-import com.automationexercise.pages.components.CategoryComponent;
+import com.automationexercise.pages.components.SidebarComponent;
 import com.automationexercise.pages.components.FooterComponent;
 import com.automationexercise.pages.components.HeaderComponent;
 import io.qameta.allure.Step;
@@ -80,7 +80,7 @@ public class HomePage extends BasePage{
      *
      * @return CategoryComponent instance
      */
-    public CategoryComponent category() {
-        return new CategoryComponent();
+    public SidebarComponent sidebar() {
+        return new SidebarComponent();
     }
 }
