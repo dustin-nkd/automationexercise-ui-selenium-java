@@ -22,7 +22,9 @@
 <!--            <class name="com.automationexercise.tests.CategoryTest"/>-->
 <!--            <class name="com.automationexercise.tests.BrandTest"/>-->
 <!--            <class name="com.automationexercise.tests.SearchCartTest"/>-->
-            <class name="com.automationexercise.tests.ProductReviewTest"/>
+<!--            <class name="com.automationexercise.tests.ProductReviewTest"/>-->
+            <class name="com.automationexercise.tests.RecommendedItemsTest"/>
+
 
         </classes>
     </test>

@@ -1,5 +1,6 @@
 package com.automationexercise.pages;
 
+import com.automationexercise.pages.components.CartModalComponent;
 import com.automationexercise.pages.components.SidebarComponent;
 import com.automationexercise.pages.components.FooterComponent;
 import com.automationexercise.pages.components.HeaderComponent;
@@ -12,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Page Object for the Home Page.
  * Header navigation accessed via header() getter.
  * Footer interactions accessed via footer() getter.
- * Category sidebar accessed via category() getter.
+ * Sidebar navigation via sidebar() getter.
  */
 public class HomePage extends BasePage{
 
@@ -25,6 +26,10 @@ public class HomePage extends BasePage{
     // Dynamic locator - targets View Product link on home page feature items
     private static final String HOME_VIEW_PRODUCT_TMPL =
             "(//div[@class='features_items']//a[contains(@href,'/product_details')])[%s]";
+
+    // Recommended items section
+    private static final By RECOMMENDED_ITEMS_HEADING = By.cssSelector(".recommended_items .title");
+    private static final By RECOMMENDED_ADD_TO_CART   = By.cssSelector("#recommended-item-carousel .add-to-cart");
 
     // ==================== ACTIONS ====================
 
@@ -52,6 +57,51 @@ public class HomePage extends BasePage{
         log.info("Clicking 'View Product' for featured product at index: {}", index);
         click(buildLocator(HOME_VIEW_PRODUCT_TMPL, index));
         return new ProductDetailPage();
+    }
+
+    /** Scrolls to the bottom of home page to reveal Recommended Items section.
+     * Step 3 of TC22.
+     */
+    @Step("Scroll to bottom of page")
+    public void scrollToRecommendedSection() {
+        log.info("Scrolling to bottom of page");
+        scrollToBottom();
+    }
+
+    /**
+     * Verifies 'RECOMMENDED ITEMS' section is visible.
+     *
+     * @return true if heading is visible
+     */
+    @Step("Verify 'RECOMMENDED ITEMS' section is visible")
+    public boolean isRecommendedItemsSectionVisible() {
+        boolean visible = isDisplayed(RECOMMENDED_ITEMS_HEADING);
+        log.info("'RECOMMENDED ITEMS' visible: {}", visible);
+        return visible;
+    }
+
+    /**
+     * Returns 'RECOMMENDED ITEMS' heading text.
+     * Used for exact text assertion in TC22.
+     *
+     * @return heading text
+     */
+    @Step("Get 'RECOMMENDED ITEMS' heading text")
+    public String getRecommendedItemsHeadingText() {
+        return getText(RECOMMENDED_ITEMS_HEADING);
+    }
+
+    /**
+     * Clicks 'Add To Cart' on the first recommended product.
+     * Return CartModalComponent - modal appears after adding product.
+     *
+     * @return CartModalComponent instance
+     */
+    @Step("Click 'Add To Cart' on first recommended product")
+    public CartModalComponent addFirstRecommendedItemToCart() {
+        log.info("Adding first recommended item to cart");
+        click(RECOMMENDED_ADD_TO_CART);
+        return new CartModalComponent();
     }
 
     /**
