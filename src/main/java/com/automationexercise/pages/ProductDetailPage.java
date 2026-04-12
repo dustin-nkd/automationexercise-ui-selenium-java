@@ -16,14 +16,20 @@ public class ProductDetailPage extends BasePage{
 
     // ==================== LOCATORS ====================
 
-    private static final By PRODUCT_NAME         = By.cssSelector(".product-information h2");
-    private static final By PRODUCT_CATEGORY     = By.cssSelector(".product-information p:nth-child(3)");
-    private static final By PRODUCT_PRICE        = By.cssSelector(".product-information span span");
-    private static final By PRODUCT_AVAILABILITY = By.cssSelector(".product-information p:nth-child(6)");
-    private static final By PRODUCT_CONDITION    = By.cssSelector(".product-information p:nth-child(7)");
-    private static final By PRODUCT_BRAND        = By.cssSelector(".product-information p:nth-child(8)");
-    private static final By QUANTITY_INPUT       = By.cssSelector("#quantity");
-    private static final By ADD_TO_CART_BTN      = By.cssSelector("button.cart");
+    private static final By PRODUCT_NAME              = By.cssSelector(".product-information h2");
+    private static final By PRODUCT_CATEGORY          = By.cssSelector(".product-information p:nth-child(3)");
+    private static final By PRODUCT_PRICE             = By.cssSelector(".product-information span span");
+    private static final By PRODUCT_AVAILABILITY      = By.cssSelector(".product-information p:nth-child(6)");
+    private static final By PRODUCT_CONDITION         = By.cssSelector(".product-information p:nth-child(7)");
+    private static final By PRODUCT_BRAND             = By.cssSelector(".product-information p:nth-child(8)");
+    private static final By QUANTITY_INPUT            = By.cssSelector("#quantity");
+    private static final By ADD_TO_CART_BTN           = By.cssSelector("button.cart");
+    private static final By WRITE_YOUR_REVIEW_HEADING = By.cssSelector("a[href='#reviews']");
+    private static final By REVIEW_NAME_INPUT         = By.cssSelector("#name");
+    private static final By REVIEW_EMAIL_INPUT        = By.cssSelector("#email");
+    private static final By REVIEW_TEXT_INPUT         = By.cssSelector("#review");
+    private static final By REVIEW_SUBMIT_BUTTON      = By.cssSelector("#button-review");
+    private static final By REVIEW_SUCCESS_MESSAGE    = By.cssSelector("#review-section .alert-success");
 
     // ==================== ACTIONS ====================
 
@@ -146,6 +152,66 @@ public class ProductDetailPage extends BasePage{
         log.info("Clicking 'Add to cart' button");
         click(ADD_TO_CART_BTN);
         return new CartModalComponent();
+    }
+
+    /**
+     * Verifies 'Write Your Review' heading is visible on product detail page.
+     *
+     * @return true if heading is visible
+     */
+    @Step("Verify 'Write  Your Review' haeding is visible")
+    public boolean isWriteYourReviewVisible() {
+        boolean visible = isDisplayed(WRITE_YOUR_REVIEW_HEADING);
+        log.info("'Write Your Review' visible: {}", visible);
+        return visible;
+    }
+
+    /**
+     * Returns the 'Write Your Review' heading text.
+     *
+     * @return heading text
+     */
+    @Step("Get 'Write Your Review' heading text")
+    public String getWriteYourReviewHeadingText() {
+        return getText(WRITE_YOUR_REVIEW_HEADING);
+    }
+
+    /**
+     * Fills review form with name, email and review text.
+     * Step 7 - all fields required together before submission (YAGNI).
+     *
+     * @param name   reviewer's name
+     * @param email  reviewer's email
+     * @param review review text
+     */
+    @Step("Fill review form - name: {name}, email: {email}")
+    public void fillReviewForm(String name, String email, String review) {
+        log.info("Filling review form for: '{}'", name);
+        scrollToElement(WRITE_YOUR_REVIEW_HEADING);
+        type(REVIEW_NAME_INPUT, name);
+        type(REVIEW_EMAIL_INPUT, email);
+        type(REVIEW_TEXT_INPUT, review);
+    }
+
+    /**
+     * Clicks 'Submit' button to submit the review.
+     */
+    @Step("Click 'Submit' review button")
+    public void submitReview() {
+        log.info("Submitting review");
+        click(REVIEW_SUBMIT_BUTTON);
+    }
+
+    /**
+     * Returns the success message text after review submission.
+     *
+     * @return success message text
+     */
+    @Step("Get review success message text")
+    public String getReviewSuccessMessage() {
+        String message = getText(REVIEW_SUCCESS_MESSAGE);
+        log.info("Review success message: '{}'", message);
+        return message;
     }
 
     /**
