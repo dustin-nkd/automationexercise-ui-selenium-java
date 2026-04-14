@@ -1,7 +1,7 @@
 package com.automationexercise.base;
 
 import com.automationexercise.App;
-import com.automationexercise.driver.Drivermanager;
+import com.automationexercise.driver.DriverManager;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+
+import java.io.File;
 
 /**
  * Base class for all test classes.
@@ -37,7 +39,7 @@ public abstract class BaseTest {
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         log.info("====== Starting test: {} =====", Thread.currentThread().getName());
-        Drivermanager.initDriver();
+        DriverManager.initDriver();
         app = new App();
     }
 
@@ -60,7 +62,7 @@ public abstract class BaseTest {
         log.info("===== Finished test: {} | Status: {} =====",
                 result.getName(), getStatusLabel(result.getStatus()));
 
-        Drivermanager.quitDriver();
+        DriverManager.quitDriver();
     }
 
     // ==================== SCREENSHOT ====================
@@ -74,7 +76,7 @@ public abstract class BaseTest {
     @Attachment(value = "Screenshot on failure: {testName}", type = "image/png")
     private byte[] captureScreenshot(String testName) {
         try {
-            WebDriver driver = Drivermanager.getDriver();
+            WebDriver driver = DriverManager.getDriver();
             return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
         } catch (Exception e) {
             log.error("Failed to capture screenshot for test: {}", testName, e);
@@ -96,5 +98,43 @@ public abstract class BaseTest {
             case ITestResult.SKIP -> "SKIPPED";
             default -> "UNKNOWN";
         };
+    }
+
+    /**
+     * Waits for a file to be downloaded to the specified directory.
+     * Polls every 500ms until matching file appears or timeout is reached.
+     *
+     * @param downloadDir    path to download directory
+     * @param fileExtension  file extension to look for (e.g. ".pdf", ".txt")
+     * @param timeoutSeconds max seconds to wait for the file
+     * @return true if file downloaded within timeout, false otherwise
+     */
+    protected boolean waitForDownload(String downloadDir,
+                                      String fileExtension,
+                                      int timeoutSeconds) {
+        File dir = new File(downloadDir);
+        long endTime = System.currentTimeMillis() + (timeoutSeconds * 1000L);
+
+        while (System.currentTimeMillis() < endTime) {
+            File[] files = dir.listFiles((d, name) ->
+                    name.endsWith(fileExtension) && !name.endsWith(".crdownload"));
+
+            if (files != null && files.length > 0) {
+                log.info("File downloaded: {}", files[0].getName());
+                return true;
+            }
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                log.warn("Wait for file download interrupted");
+                return false;
+            }
+        }
+
+        log.warn("File download timeout after {}s - no {} file found in {}",
+                timeoutSeconds, fileExtension, downloadDir);
+        return false;
     }
 }

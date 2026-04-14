@@ -1,7 +1,7 @@
 package com.automationexercise.pages;
 
 import com.automationexercise.config.ConfigManager;
-import com.automationexercise.driver.Drivermanager;
+import com.automationexercise.driver.DriverManager;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -37,7 +37,7 @@ public abstract class BasePage {
      * No PageFactory - elements resolved fresh on every call.
      */
     public BasePage() {
-        this.driver = Drivermanager.getDriver();
+        this.driver = DriverManager.getDriver();
         this.wait   = new WebDriverWait(driver,
                 Duration.ofSeconds(ConfigManager.getInt("explicit.wait")));
     }

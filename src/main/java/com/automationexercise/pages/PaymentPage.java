@@ -14,14 +14,15 @@ public class PaymentPage extends BasePage{
 
     // ==================== LOCATORS ====================
 
-    private static final By NAME_ON_CARD_INPUT = By.cssSelector("[data-qa='name-on-card']");
-    private static final By CARD_NUMBER_INPUT  = By.cssSelector("[data-qa='card-number']");
-    private static final By CVC_INPUT          = By.cssSelector("[data-qa='cvc']");
-    private static final By EXPIRY_MONTH_INPUT = By.cssSelector("[data-qa='expiry-month']");
-    private static final By EXPIRY_YEAR_INPUT  = By.cssSelector("[data-qa='expiry-year']");
-    private static final By PAY_CONFIRM_BTN    = By.cssSelector("[data-qa='pay-button']");
-    private static final By SUCCESS_MESSAGE    = By.cssSelector("[data-qa='order-placed'] b");
-    private static final By CONTINUE_BTN       = By.cssSelector("[data-qa='continue-button']");
+    private static final By NAME_ON_CARD_INPUT   = By.cssSelector("[data-qa='name-on-card']");
+    private static final By CARD_NUMBER_INPUT    = By.cssSelector("[data-qa='card-number']");
+    private static final By CVC_INPUT            = By.cssSelector("[data-qa='cvc']");
+    private static final By EXPIRY_MONTH_INPUT   = By.cssSelector("[data-qa='expiry-month']");
+    private static final By EXPIRY_YEAR_INPUT    = By.cssSelector("[data-qa='expiry-year']");
+    private static final By PAY_CONFIRM_BTN      = By.cssSelector("[data-qa='pay-button']");
+    private static final By SUCCESS_MESSAGE      = By.cssSelector("[data-qa='order-placed'] b");
+    private static final By CONTINUE_BTN         = By.cssSelector("[data-qa='continue-button']");
+    private static final By DOWNLOAD_INVOICE_BTN = By.cssSelector("a.btn.btn-default.check_out");
 
     // ==================== ACTIONS ====================
 
@@ -89,5 +90,15 @@ public class PaymentPage extends BasePage{
         log.info("Clicking 'Continue' after order placed");
         click(CONTINUE_BTN);
         return new HomePage();
+    }
+
+    /**
+     * Clicks 'Download Invoice' button.
+     * File is downloaded to target/downloads directory configured in DriverManager.
+     */
+    @Step("Click 'Download Invoice' button")
+    public void clickDownloadInvoice() {
+        log.info("Clicking 'Download Invoice' button");
+        click(DOWNLOAD_INVOICE_BTN);
     }
 }
