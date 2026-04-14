@@ -11,7 +11,10 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Manages WebDriver lifecycle using ThreadLocal for thread-safe parallel execution.
@@ -27,15 +30,15 @@ import java.time.Duration;
  *  DriverManager.getDriver();  // ger driver for current thread
  *  DriverManage.quitDriver();  // quit and clean up
  */
-public class Drivermanager {
+public class DriverManager {
 
-    private static final Logger log = LoggerFactory.getLogger(Drivermanager.class);
+    private static final Logger log = LoggerFactory.getLogger(DriverManager.class);
 
     // ThreadLocal ensures each thread has its own isolated WebDriver instance
     private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
     // Private constructor - prevent instantiation (utility class)
-    private Drivermanager() {}
+    private DriverManager() {}
 
     /**
      * Initializes a WebDriver instance for the current thread.
@@ -107,6 +110,7 @@ public class Drivermanager {
 
     /**
      * Creates a ChromeDriver with recommended options.
+     * Configures download directory to target/downloads for test verification.
      *
      * @param headless true to run without browser UI (for CI/CD)
      * @return configured ChromeDriver instance
@@ -125,6 +129,15 @@ public class Drivermanager {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--start-maximized");
+
+        // Configure download directory - enables download verification in tests
+        String downladPath = Paths.get(System.getProperty("user.dir"), "target", "downloads")
+                .toAbsolutePath().toString();
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", downladPath);
+        prefs.put("download.prompt_for_download", false);
+        prefs.put("download.directory_upgrade", true);
+        options.setExperimentalOption("prefs", prefs);
 
         return new ChromeDriver(options);
     }

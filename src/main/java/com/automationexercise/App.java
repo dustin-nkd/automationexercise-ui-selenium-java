@@ -1,7 +1,7 @@
 package com.automationexercise;
 
 import com.automationexercise.config.ConfigManager;
-import com.automationexercise.driver.Drivermanager;
+import com.automationexercise.driver.DriverManager;
 import com.automationexercise.pages.HomePage;
 import com.automationexercise.pages.components.HeaderComponent;
 import io.qameta.allure.Step;
@@ -34,7 +34,7 @@ public class App {
     public HomePage open() {
         String url = ConfigManager.get("base.url");
         log.info("Opening application at: {}", url);
-        Drivermanager.getDriver().get(url);
+        DriverManager.getDriver().get(url);
         return new HomePage();
     }
 
