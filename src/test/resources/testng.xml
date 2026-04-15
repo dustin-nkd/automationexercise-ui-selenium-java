@@ -27,7 +27,6 @@
 <!--            <class name="com.automationexercise.tests.CheckoutAddressTest"/>-->
 <!--            <class name="com.automationexercise.tests.InvoiceTest"/>-->
             <class name="com.automationexercise.tests.ScrollTest"/>
-
         </classes>
     </test>
 

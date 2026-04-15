@@ -142,6 +142,16 @@ public class HomePage extends BasePage{
     }
 
     /**
+     * Scrolls page back to top using JavaScript - without arrow button.
+     * Step 6 of TC26
+     */
+    @Step("Scroll up to top of page")
+    public void scrollPageToTop() {
+        log.info("Scrolling to top of page");
+        scrollToTop();
+    }
+
+    /**
      * Returns HeaderComponent for navigation.
      * Instantiated fresh each call - consistent with By locator approach (no caching).
      *

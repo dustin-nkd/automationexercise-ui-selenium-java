@@ -54,4 +54,43 @@ public class ScrollTest extends BaseTest {
                 "Hero text should contain expected content after scroll up"
         );
     }
+
+    @Test(description = "TC26 - Verify Scroll Up without Arrow button and Scroll Down")
+    @Story("Scroll down to footer and scroll back up using JavaScript")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("""
+            Steps:
+            1. Navigate to home page
+            2. Verify home page is visible
+            3. Scroll down to bottom of page
+            4. Verify 'SUBSCRIPTION' is visible in footer
+            5. Scroll up to top using JavaScript
+            6. Verify page scrolled to top — hero text visible
+            """)
+    public void testScrollUpWithoutArrowButton() {
+
+        // -- Step 2, 3: Open app and verify home page --
+        HomePage homePage = app.open();
+        Assert.assertTrue(homePage.isHomePageVisible(),
+                "Home page should be visible");
+
+        // -- Step 4: Scroll down to bottom --
+        homePage.scrollToRecommendedSection();
+
+        // -- Step 5: Verify 'SUBSCRIPTION' is visible --
+        Assert.assertEquals(homePage.footer().getSubscriptionHeadingText(),
+                "SUBSCRIPTION",
+                "'SUBSCRIPTION' heading should be visible in footer");
+
+        // -- Step 6: Click scroll up arrow --
+        homePage.scrollPageToTop();
+
+        // -- Step 7: Verify page scrolled to top --
+        Assert.assertTrue(homePage.isHeroTextVisible(),
+                "Hero text should be visible after scrolling up");
+        Assert.assertTrue(
+                homePage.getHeroText().contains("Full-Fledged practice website for Automation Engineers"),
+                "Hero text should contain expected content after scroll up"
+        );
+    }
 }
