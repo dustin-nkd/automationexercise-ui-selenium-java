@@ -30,6 +30,8 @@ public class HomePage extends BasePage{
     // Recommended items section
     private static final By RECOMMENDED_ITEMS_HEADING = By.cssSelector(".recommended_items .title");
     private static final By RECOMMENDED_ADD_TO_CART   = By.cssSelector("#recommended-item-carousel .add-to-cart");
+    private static final By SCROLL_UP_ARROW           = By.cssSelector("#scrollUp");
+    private static final By HERO_TEXT                 = By.cssSelector("div.active.item.left div h2");
 
     // ==================== ACTIONS ====================
 
@@ -102,6 +104,41 @@ public class HomePage extends BasePage{
         log.info("Adding first recommended item to cart");
         click(RECOMMENDED_ADD_TO_CART);
         return new CartModalComponent();
+    }
+
+    /**
+     * Clicks the scroll-up arrow button at bottom right of the page.
+     * Scrolls page back to top smoothly.
+     */
+    @Step("Click scroll up arrow button")
+    public void clickScrollUpArrow() {
+        log.info("Clicking scroll up arrow button");
+        click(SCROLL_UP_ARROW);
+    }
+
+    /**
+     * Returns the hero text visible at the top of home page.
+     * Used for assertion in TC25 step 7.
+     *
+     * @return hero text content
+     */
+    @Step("Get hero text")
+    public String getHeroText() {
+        String text = getText(HERO_TEXT);
+        log.info("Hero text: {}", text);
+        return text;
+    }
+
+    /**
+     * Verifies hero text is visible 0 confirms page scrolled back to top.
+     *
+     * @return true if hero text is visible
+     */
+    @Step("Verify hero text is visible")
+    public boolean isHeroTextVisible() {
+        boolean visible = isDisplayed(HERO_TEXT);
+        log.info("Hero text visible: {}", visible);
+        return visible;
     }
 
     /**
