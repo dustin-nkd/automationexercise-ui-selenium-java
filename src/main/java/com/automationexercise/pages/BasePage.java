@@ -292,6 +292,14 @@ public abstract class BasePage {
     }
 
     /**
+     * Scrolls to the page back to the top using JavaScript.
+     * Used for TC26 - scroll up withou arrow button.
+     */
+    protected void scrollToTop() {
+        ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");
+    }
+
+    /**
      * Scrolls to the bottom of the page using JavaScript.
      */
     protected void scrollToBottom() {
