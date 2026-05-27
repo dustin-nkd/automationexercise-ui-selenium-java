@@ -37,12 +37,27 @@ public class ConfigManager {
      * Called once via static initializer block.
      */
     private static void loadProperties() {
+        // 1. Load default properties
         try (FileInputStream fileInputStream = new FileInputStream(CONFIG_FILE_PATH)) {
             properties.load(fileInputStream);
-            log.info("Configuration loaded successfully from: {}", CONFIG_FILE_PATH);
+            log.info("Default configuration loaded successfully from: {}", CONFIG_FILE_PATH);
         } catch (IOException e) {
             log.error("Failed to load configuration file: {}", CONFIG_FILE_PATH, e);
             throw new RuntimeException("Cannot load configuration file: " + CONFIG_FILE_PATH, e);
+        }
+
+        // 2. Load environment-specific properties if specified (e.g., -Denv=qa)
+        String env = System.getProperty("env");
+        if (env != null && !env.isBlank()) {
+            String envFilePath = String.format("config/config-%s.properties", env.toLowerCase().trim());
+            log.info("Loading environment-specific configuration from: {}", envFilePath);
+            try (FileInputStream envInputStream = new FileInputStream(envFilePath)) {
+                Properties envProperties = new Properties();
+                envProperties.load(envInputStream);
+                properties.putAll(envProperties);
+            } catch (IOException e) {
+                log.warn("Environment-specific file {} not found or failed to load. Using default configuration.", envFilePath);
+            }
         }
     }
 

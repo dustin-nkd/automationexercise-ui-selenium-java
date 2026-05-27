@@ -8,7 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- * Test classs for scroll functionality.
+ * Test class for scroll functionality.
  * TC25: Verify Scroll Up using 'Arrow' button and Scroll Down functionality.
  * TC26: Verify Scroll Up without 'Arrow' button and Scroll Down functionality.
  */

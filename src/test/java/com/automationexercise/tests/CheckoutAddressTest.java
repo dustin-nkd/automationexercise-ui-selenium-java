@@ -19,7 +19,7 @@ public class CheckoutAddressTest extends BaseTest {
     private final Faker faker = new Faker();
 
     @Test(description = "TC23 - Verify address details in checkout page")
-    @Story("Verify checkout address matches registration addess")
+    @Story("Verify checkout address matches registration address")
     @Severity(SeverityLevel.CRITICAL)
     @Description("""
             Steps:
@@ -34,7 +34,7 @@ public class CheckoutAddressTest extends BaseTest {
             9. Verify billing address matches registration data
             10. Delete account, verify ACCOUNT DELETED
             """)
-    public void testVerifyAddressDetailsInCheckou() {
+    public void testVerifyAddressDetailsInCheckout() {
 
         // -- Generate test data --
         String name         = faker.name().firstName();

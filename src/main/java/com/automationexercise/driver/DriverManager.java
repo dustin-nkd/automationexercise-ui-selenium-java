@@ -27,8 +27,8 @@ import java.util.Map;
  * <p>
  * Usage:
  *  DriverManager.initDriver(); // create driver for current thread
- *  DriverManager.getDriver();  // ger driver for current thread
- *  DriverManage.quitDriver();  // quit and clean up
+ *  DriverManager.getDriver();  // get driver for current thread
+ *  DriverManager.quitDriver(); // quit and clean up
  */
 public class DriverManager {
 
@@ -119,22 +119,22 @@ public class DriverManager {
         ChromeOptions options = new ChromeOptions();
 
         if (headless) {
-            // Use new headlss mode (available since Chrome 112)
+            // Use new headless mode (available since Chrome 112)
             options.addArguments("--headless=new");
         }
 
-        options.addArguments("--disalbe-infobars");
-        options.addArguments("--disalbe-extensions");
-        options.addArguments("--disalbe-gpu");
+        options.addArguments("--disable-infobars");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--start-maximized");
 
         // Configure download directory - enables download verification in tests
-        String downladPath = Paths.get(System.getProperty("user.dir"), "target", "downloads")
+        String downloadPath = Paths.get(System.getProperty("user.dir"), "target", "downloads")
                 .toAbsolutePath().toString();
         Map<String, Object> prefs = new HashMap<>();
-        prefs.put("download.default_directory", downladPath);
+        prefs.put("download.default_directory", downloadPath);
         prefs.put("download.prompt_for_download", false);
         prefs.put("download.directory_upgrade", true);
         options.setExperimentalOption("prefs", prefs);
