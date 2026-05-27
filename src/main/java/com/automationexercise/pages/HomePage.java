@@ -31,7 +31,7 @@ public class HomePage extends BasePage{
     private static final By RECOMMENDED_ITEMS_HEADING = By.cssSelector(".recommended_items .title");
     private static final By RECOMMENDED_ADD_TO_CART   = By.cssSelector("#recommended-item-carousel .add-to-cart");
     private static final By SCROLL_UP_ARROW           = By.cssSelector("#scrollUp");
-    private static final By HERO_TEXT                 = By.cssSelector("div.active.item.left div h2");
+    private static final By HERO_TEXT                 = By.cssSelector("div.active.item div h2");
 
     // ==================== ACTIONS ====================
 
@@ -48,11 +48,11 @@ public class HomePage extends BasePage{
     }
 
     /**
-     * Cliks 'View Product' link for a featured product on home page.
+     * Clicks 'View Product' link for a featured product on home page.
      * Uses 1-based index - 1 means first featured product.
      *
      * @param index 1-based position of the product
-     * @return ProductDetailPage instace
+     * @return ProductDetailPage instance
      */
     @Step("Click 'View Product' for featured product at index: {index}")
     public ProductDetailPage clickViewProduct(String index) {
@@ -130,7 +130,7 @@ public class HomePage extends BasePage{
     }
 
     /**
-     * Verifies hero text is visible 0 confirms page scrolled back to top.
+     * Verifies hero text is visible and confirms page scrolled back to top.
      *
      * @return true if hero text is visible
      */

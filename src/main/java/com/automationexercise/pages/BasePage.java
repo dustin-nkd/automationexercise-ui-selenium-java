@@ -166,7 +166,7 @@ public abstract class BasePage {
     }
 
     /**
-     * Returns the count of elements matching the given locator WIHTOUT waiting.
+     * Returns the count of elements matching the given locator WITHOUT waiting.
      * Safe for checking absence of elements - returns 0 instead of throwing.
      *
      * @param locator the By locator
@@ -195,7 +195,7 @@ public abstract class BasePage {
      */
     @Step("Type '{text}' into element: {locator}")
     protected void type(By locator, String text) {
-        log.debug("Typing '{} into: {}", text, locator);
+        log.debug("Typing '{}' into: {}", text, locator);
         WebElement element = waitForVisible(locator);
         element.clear();
         element.sendKeys(text);
@@ -223,7 +223,7 @@ public abstract class BasePage {
 
     /**
      * Checks whether an element is displayed on the page.
-     * Returns false instead of throwing - safe or negative assertions.
+     * Returns false instead of throwing - safe for negative assertions.
      *
      * @param locator the By locator of the element
      * @return true if element is visible, false otherwise
@@ -267,12 +267,12 @@ public abstract class BasePage {
     }
 
     /**
-     * Selects a dropdown option bt its visible text.
+     * Selects a dropdown option by its visible text.
      *
      * @param locator the By locator of the <select> element
      * @param text    the visible option text to select
      */
-    @Step("Select '{text}' from dropdown: {locator")
+    @Step("Select '{text}' from dropdown: {locator}")
     protected void selectByVisibleText(By locator, String text) {
         log.debug("Selecting '{}' from dropdown: {}", text, locator);
         new Select(waitForVisible(locator)).selectByVisibleText(text);
@@ -293,7 +293,7 @@ public abstract class BasePage {
 
     /**
      * Scrolls to the page back to the top using JavaScript.
-     * Used for TC26 - scroll up withou arrow button.
+     * Used for TC26 - scroll up without arrow button.
      */
     protected void scrollToTop() {
         ((JavascriptExecutor) driver).executeScript("window.scrollTo(0, 0);");

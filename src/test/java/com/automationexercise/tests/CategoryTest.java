@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 @Feature("Category Navigation")
 public class CategoryTest extends BaseTest {
 
-    @Test(description = "TC18 - View Category Prodcuts")
+    @Test(description = "TC18 - View Category Products")
     @Story("Navigate to category products via sidebar")
     @Description("""
             Steps:
@@ -31,7 +31,7 @@ public class CategoryTest extends BaseTest {
             7. Click 'Tshirts' subcategory under Men
             8. Verify category page heading contains 'MEN'
             """)
-    public void testViewCategoryProdcuts() {
+    public void testViewCategoryProducts() {
 
         // -- Step 2, 3: Open app and verify home page --
         HomePage homePage = app.open();
