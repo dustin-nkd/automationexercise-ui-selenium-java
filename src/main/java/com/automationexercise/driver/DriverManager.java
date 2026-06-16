@@ -116,6 +116,16 @@ public class DriverManager {
      * @return configured ChromeDriver instance
      */
     private static WebDriver createChromeDriver(boolean headless) {
+        return new ChromeDriver(getChromeOptions(headless));
+    }
+
+    /**
+     * Configures ChromeOptions with recommended settings and download preferences.
+     *
+     * @param headless true to run chrome in headless mode
+     * @return configured ChromeOptions instance
+     */
+    private static ChromeOptions getChromeOptions(boolean headless) {
         ChromeOptions options = new ChromeOptions();
 
         if (headless) {
@@ -139,7 +149,7 @@ public class DriverManager {
         prefs.put("download.directory_upgrade", true);
         options.setExperimentalOption("prefs", prefs);
 
-        return new ChromeDriver(options);
+        return options;
     }
 
     /**
