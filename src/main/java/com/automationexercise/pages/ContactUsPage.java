@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Page Object for the Contact Us Page (/contact_us).
  */
-public class ContactUsPage extends BasePage{
+public class ContactUsPage extends BasePage {
 
     private static final Logger log = LoggerFactory.getLogger(ContactUsPage.class);
 
@@ -69,7 +69,7 @@ public class ContactUsPage extends BasePage{
 
     /**
      * Clicks 'Submit' button then accepts the browser alert dialog.
-     * Step 8 + 9 - alert appers immediately after submit click.
+     * Step 8 + 9 - alert appears immediately after submit click.
      * Always performed together - no test case need them split (YAGNI).
      */
     @Step("Click 'Submit' button and accept alert")

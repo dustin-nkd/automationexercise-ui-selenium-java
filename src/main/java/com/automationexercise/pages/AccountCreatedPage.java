@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Page Object for the Account Created confirmation page.
  */
-public class AccountCreatedPage extends BasePage{
+public class AccountCreatedPage extends BasePage {
 
     private static final Logger log =  LoggerFactory.getLogger(AccountCreatedPage.class);
 
@@ -32,7 +32,7 @@ public class AccountCreatedPage extends BasePage{
     }
 
     /**
-     * Returns the text of 'ACCOUNT CREATED!' heading
+     * Returns the text of 'ACCOUNT CREATED!' heading.
      * Used for exact text assertion in test.
      *
      * @return heading text

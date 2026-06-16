@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Page Object for All Products page (/products).
  */
-public class ProductsPage extends BasePage{
+public class ProductsPage extends BasePage {
 
     private static final Logger log = LoggerFactory.getLogger(ProductsPage.class);
 
@@ -155,13 +155,13 @@ public class ProductsPage extends BasePage{
                 .map(e -> e.getText().toLowerCase())
                 .allMatch(name -> name.contains(keyword.toLowerCase()));
 
-        log.info("All search reuslts relevant to '{}': {}", keyword, allRelevant);
+        log.info("All search results relevant to '{}': {}", keyword, allRelevant);
         return allRelevant;
     }
 
     /**
      * Hovers over a product and clicks 'Add to cart'.
-     * Uses 1-based index - 1 means firts product.
+     * Uses 1-based index - 1 means first product.
      * Return CartModalComponent - modal appears after adding product.
      *
      * @param index 1-based position of the product in the list
@@ -179,7 +179,7 @@ public class ProductsPage extends BasePage{
 
     /**
      * Adds all search result products to cart one by one.
-     * Hoves over each product, clicks Add to cart, then continues shopping
+     * Hovers over each product, clicks Add to cart, then continues shopping
      * until all products are added. Returns CartModalComponent of last product.
      *
      * @return CartModalComponent of the last product added

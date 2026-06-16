@@ -262,7 +262,8 @@ public abstract class BasePage {
         try {
             return waitForPresence(locator).isSelected();
         } catch (TimeoutException | NoSuchElementException e) {
-            return true;
+            log.warn("Failed to check if checkbox is checked: {}", locator);
+            return false;
         }
     }
 

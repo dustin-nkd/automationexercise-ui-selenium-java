@@ -158,7 +158,7 @@ public class CheckoutPage extends BasePage {
     }
 
     /**
-     * Retuns the phone shown in delivery address section.
+     * Returns the phone shown in delivery address section.
      *
      * @return phone text
      */
@@ -168,7 +168,7 @@ public class CheckoutPage extends BasePage {
     }
 
     /**
-     * Retuns the phone shown in billing address section.
+     * Returns the phone shown in billing address section.
      *
      * @return phone text
      */

@@ -97,7 +97,7 @@ public class RegisterPage extends BasePage {
      */
     @Step("Enter password")
     public RegisterPage enterPassword(String password) {
-        log.info("Entering password: {}", password);
+        log.info("Entering password: *****");
         type(PASSWORD_INPUT, password);
         return this;
     }
@@ -124,7 +124,7 @@ public class RegisterPage extends BasePage {
     @Step("Select 'Sign up for our newsletter!' checkbox")
     public RegisterPage selectNewsletterCheckbox() {
         log.info("Selecting newsletter checkbox");
-        if (isCheckboxChecked(NEWSLETTER_CHECKBOX)) {
+        if (!isCheckboxChecked(NEWSLETTER_CHECKBOX)) {
             click(NEWSLETTER_CHECKBOX);
         }
         return this;
@@ -136,7 +136,7 @@ public class RegisterPage extends BasePage {
     @Step("Select 'Receive special offers from our partners!' checkbox")
     public RegisterPage selectOptCheckBox() {
         log.info("Selecting opt-in checkbox");
-        if (isCheckboxChecked(OPT_CHECKBOX)) {
+        if (!isCheckboxChecked(OPT_CHECKBOX)) {
             click(OPT_CHECKBOX);
         }
         return this;

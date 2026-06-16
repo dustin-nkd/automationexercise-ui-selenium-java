@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Page Object for the Account Deleted confirmation page.
  */
-public class AccountDeletedPage extends BasePage{
+public class AccountDeletedPage extends BasePage {
 
     private static final Logger log = LoggerFactory.getLogger(AccountDeletedPage.class);
 
@@ -24,10 +24,10 @@ public class AccountDeletedPage extends BasePage{
      *
      * @return true if heading is visible
      */
-    @Step("Verify ''ACCOUNT CREATED!' is visible")
+    @Step("Verify 'ACCOUNT DELETED!' is visible")
     public boolean isAccountDeletedVisible() {
         boolean visible = isDisplayed(ACCOUNT_DELETED_HEADING);
-        log.info("'ACCOUNT CREATED' visible: {}", visible);
+        log.info("'ACCOUNT DELETED' visible: {}", visible);
         return visible;
     }
 

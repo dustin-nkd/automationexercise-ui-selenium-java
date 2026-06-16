@@ -96,7 +96,7 @@ public class CheckoutAddressTest extends BaseTest {
         // -- Step 12: Verify delivery address matches registration data --
         String expectedFullName = "Mr. " + firstName + " " + lastName;
         Assert.assertTrue(
-                checkoutPage.getBillingFullName().contains(firstName)
+                checkoutPage.getDeliveryFullName().contains(firstName)
                 && checkoutPage.getDeliveryFullName().contains(lastName),
                 "Delivery address full name should match registration: " + expectedFullName
         );

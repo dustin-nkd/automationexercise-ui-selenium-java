@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Application entry point - represents the application under test.
  * Responsible for launching the app and returning the initial Page Object.
  * <p>
- * Usage iin test (via BaseTest):
+ * Usage in test (via BaseTest):
  *  HomePage  homePage = app.open();
  * <p>
  * This pattern ensures:
