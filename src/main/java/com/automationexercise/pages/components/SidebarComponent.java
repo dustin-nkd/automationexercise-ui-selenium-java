@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
  * Handles both Category and Brand navigation - present on
  * Products page, Category page and Brand page.
  * <p>
- * Replaces CategoryComponent and BrandComponent - unified sidebar.
- * component with dynamic locators for any category or brand (DRY).
+ * Replaces CategoryComponent and BrandComponent - unified sidebar component
+ * with dynamic locators for any category or brand (DRY).
  * <p>
  * Usage:
  *  productsPage.sidebar().isCategorySidebarVisible();
@@ -40,7 +40,7 @@ public class SidebarComponent extends BasePage {
     /**
      * Verifies the category sidebar is visible on the page.
      *
-     * @return true sidebar is visible
+     * @return true if sidebar is visible
      */
     @Step("Verify category sidebar is visible")
     public boolean isCategorySidebarVisible() {

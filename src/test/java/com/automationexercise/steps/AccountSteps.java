@@ -113,7 +113,7 @@ public class AccountSteps {
     public HomePage loginUser(String email, String password) {
         log.info("Logging in with email: '{}'", email);
         return app.open()
-                .header().clickLogout()
+                .header().clickSignupLogin()
                 .login(email, password);
     }
 }

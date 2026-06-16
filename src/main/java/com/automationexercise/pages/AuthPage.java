@@ -61,7 +61,7 @@ public class AuthPage extends BasePage {
      */
     @Step("Login with email: {email}")
     public HomePage login(String email, String password) {
-        log.info("Logging in with email: '{}", email);
+        log.info("Logging in with email: '{}'", email);
         type(LOGIN_EMAIL_INPUT, email);
         type(LOGIN_PASSWORD_INPUT, password);
         click(LOGIN_BUTTON);
@@ -108,7 +108,7 @@ public class AuthPage extends BasePage {
     }
 
     /**
-     * Enters the name and email the click Signup.
+     * Enters the name and email then clicks Signup.
      *
      * @param name  the new user's name
      * @param email the new user's email address
@@ -116,7 +116,7 @@ public class AuthPage extends BasePage {
      */
     @Step("Sign up with name: {name} and email: {email}")
     public RegisterPage signUp(String name, String email) {
-        log.info("'Sign up with name: {}, email: {}", name, email);
+        log.info("Sign up with name: {}, email: {}", name, email);
         type(SIGNUP_NAME_INPUT, name);
         type(SIGNUP_EMAIL_INPUT, email);
         click(SIGNUP_BUTTON);

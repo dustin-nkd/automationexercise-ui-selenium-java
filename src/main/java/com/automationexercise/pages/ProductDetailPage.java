@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Page Object for the Product Detail page (/product_details/{id}).
  */
-public class ProductDetailPage extends BasePage{
+public class ProductDetailPage extends BasePage {
 
     private static final Logger log = LoggerFactory.getLogger(ProductDetailPage.class);
 
@@ -62,7 +62,7 @@ public class ProductDetailPage extends BasePage{
         boolean brandVisible        = isDisplayed(PRODUCT_BRAND);
 
         log.info("Product detail visibility - name: {}, category: {}, price: {}, " +
-                "availibity: {}, condition: {}, brand: {}",
+                "availability: {}, condition: {}, brand: {}",
                 nameVisible, categoryVisible, priceVisible,
                 availabilityVisible, conditionVisible, brandVisible);
 
@@ -101,11 +101,11 @@ public class ProductDetailPage extends BasePage{
     }
 
     /**
-     * Returns product availibility text.
+     * Returns product availability text.
      *
-     * @return product availibility
+     * @return product availability
      */
-    @Step("Get product availibility")
+    @Step("Get product availability")
     public String getProductAvailability() {
         return getText(PRODUCT_AVAILABILITY);
     }
@@ -159,7 +159,7 @@ public class ProductDetailPage extends BasePage{
      *
      * @return true if heading is visible
      */
-    @Step("Verify 'Write  Your Review' haeding is visible")
+    @Step("Verify 'Write Your Review' heading is visible")
     public boolean isWriteYourReviewVisible() {
         boolean visible = isDisplayed(WRITE_YOUR_REVIEW_HEADING);
         log.info("'Write Your Review' visible: {}", visible);

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Page Object for the Payment page.
  */
-public class PaymentPage extends BasePage{
+public class PaymentPage extends BasePage {
 
     private static final Logger log = LoggerFactory.getLogger(PaymentPage.class);
 
@@ -34,7 +34,7 @@ public class PaymentPage extends BasePage{
      * @param cardNumber  card number
      * @param cvc         card cvc
      * @param expiryMonth expiry month (e.g. "12")
-     * @param expiryYear  exiry year (e.g. "2027")
+     * @param expiryYear  expiry year (e.g. "2027")
      */
     @Step("Fill payment details - card holder: {nameOnCard}")
     public void fillPaymentDetails(String nameOnCard, String cardNumber,

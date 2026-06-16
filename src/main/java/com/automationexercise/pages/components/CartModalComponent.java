@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Component Object fot the 'Added to Cart' modal popup.
+ * Component Object for the 'Added to Cart' modal popup.
  * Appears after clicking 'Add to cart' on any product.
  * Provides two navigation options: Continue Shopping or View Cart.
  *

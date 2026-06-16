@@ -47,7 +47,7 @@ public class CartPage extends BasePage {
     }
 
     /**
-     * Retursn the number of items in the cart.
+     * Returns the number of items in the cart.
      *
      * @return cart item count
      */
@@ -191,12 +191,12 @@ public class CartPage extends BasePage {
      * Verifies a specific product is no longer in the cart.
      *
      * @param productId the product id to check
-     * @return true if prodcut row is not present
+     * @return true if product row is not present
      */
     @Step("Verify product with id '{productId}' is removed from cart")
     public boolean isProductRemoved(String productId) {
         boolean removed = !isPresent(By.id("product-" + productId));
-        log.info("Product '{} removed from cart: {}", productId, removed);
+        log.info("Product '{}' removed from cart: {}", productId, removed);
         return removed;
     }
 

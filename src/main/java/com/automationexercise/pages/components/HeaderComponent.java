@@ -141,7 +141,7 @@ public class HeaderComponent extends BasePage {
     public boolean isNavBarVisible(){
         boolean visible = isDisplayed(NAV_BAR);
         log.info("Navigation bar visible: {}", visible);
-        return true;
+        return visible;
     }
 
     /**

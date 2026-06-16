@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Footer interactions accessed via footer() getter.
  * Sidebar navigation via sidebar() getter.
  */
-public class HomePage extends BasePage{
+public class HomePage extends BasePage {
 
     private static final Logger log = LoggerFactory.getLogger(HomePage.class);
 
@@ -172,10 +172,10 @@ public class HomePage extends BasePage{
     }
 
     /**
-     * Returns CategoryComponent for sidebar category navigation.
+     * Returns SidebarComponent for sidebar category navigation.
      * Instantiated fresh each call - consistent with no-caching approach.
      *
-     * @return CategoryComponent instance
+     * @return SidebarComponent instance
      */
     public SidebarComponent sidebar() {
         return new SidebarComponent();

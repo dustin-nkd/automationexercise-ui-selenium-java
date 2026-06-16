@@ -80,7 +80,7 @@ public class ProductListPage extends BasePage {
     }
 
     /**
-     * Returns CategoryComponent for category and brand navigation.
+     * Returns SidebarComponent for category and brand navigation.
      *
      * @return CategoryComponent instance
      */

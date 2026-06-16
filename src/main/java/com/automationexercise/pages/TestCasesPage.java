@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Page Object for thet Test Cases Page (/test_cases).
+ * Page Object for the Test Cases Page (/test_cases).
  */
-public class TestCasesPage extends BasePage{
+public class TestCasesPage extends BasePage {
 
     private static final Logger log = LoggerFactory.getLogger(TestCasesPage.class);
 
